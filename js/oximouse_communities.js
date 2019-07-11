@@ -131,7 +131,7 @@ function EdgeTableToNodes(edgeTable,columnName, matchArray, weightArray, nameArr
 	if(typeof matchArray !== "undefined" && typeof nameArray !== "undefined"){
 		nodeIds = uniqueNodes.map(function(b) { 
 			var bIndex = matchArray.indexOf(b);
-			return { data: { id: b, weight: parseFloat(weightArray[bIndex]), label: nameArray[bIndex] } };
+			return { data: { id: b, weight: parseFloat(weightArray[bIndex]), color: MapColor(parseFloat(weightArray[bIndex])), label: nameArray[bIndex] } };
 		} );
 	} else {
 		nodeIds = uniqueNodes.map(function(b) { return { data: { id: b, weight: 50 } } } );
@@ -139,6 +139,17 @@ function EdgeTableToNodes(edgeTable,columnName, matchArray, weightArray, nameArr
 	return nodeIds;
 }
 
+function MapColor(input, breaks = [0,10,20], colors = ["rgb(160,160,160)", "rgb(86,203,189)", "rgb(224, 168, 0)", "rgb(143,26,29)"]){
+	if(input <= breaks[0]){
+		return colors[0];
+	} else if(input > breaks[0] && input <= breaks[1]){
+		return colors[1];
+	} else if(input > breaks[1] && input <= breaks[2]) {
+		return colors[2];
+	} else if(input > breaks[2]) {
+		return colors[3];
+	}
+}
 var edgeColors = ["rgb(160,160,160)", "rgb(86,203,189)", "rgb(143,26,29)"];
 
 /**
@@ -200,7 +211,8 @@ var cystyle = [
           'font-family': 'helvetica',
           'font-size': 14,
           'text-valign': 'top',
-          'background-color': 'mapData(weight, 1, 20, rgb(86,203,189), rgb(143,26,29))',
+          'background-color': 'data(color)',
+          //'background-color': 'mapData(weight, 1, 20, rgb(86,203,189), rgb(143,26,29))', //for weight
           'color': 'black',
           'border-color': 'rgb(0,91,150)',
           'border-width': 2,
