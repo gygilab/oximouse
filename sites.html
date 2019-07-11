@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/oximouse-02.png">
+
+    <title>OxiMouse Dashboard</title>
+
+    <!-- Oximouse CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/pviz-core.css" rel="stylesheet">
+    <link href="css/oximouse.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+    <link href="css/datatables.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+	<body>
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<a class="navbar-brand col-lg-2 col-md-3 col-sm-4 mr-0" href="index.html">
+				<img border="0" src="img/oximouse.png" width="100" height="30">
+			</a>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text border border-secondary" id="searchIcon">Search Proteins</span>
+				</div>
+				<input id = "sitesSearchInput" class="form-control border border-secondary" type="text" placeholder="Gene Symbol or Uniprot Accession" aria-label="Search" aria-describedby="searchIcon">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" id="mainNavSearchButton" aria-describedby="searchIcon">Search</button>
+				</div>
+			</div>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id = "sidebar"></div>
+	
+				<!-- Main dashboard grid -->
+				<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4">
+					<div class="container-fluid border-bottom">
+						<div class="row mr-sm-auto col-lg-12">
+							<div class="mr-sm-auto col-lg-5 col-md-5 pt-3 px-4 shadow-sm">
+								<h4>Cys-Oxidation Stochiometry</h4>
+								<button class="btn btn-outline-secondary" id = "fullOrModOnlyToggleHeatmap">Modified Positions</button>
+								<div class="my-4" id="siteHeatmap"></div>
+							</div>
+							<div class="mr-sm-auto col-lg-6  col-md-6 border-bottom">
+								<div id = "seqMapDiv" class = "ml-sm-auto col-lg-12">
+									<h4>Sequence Map</h4>
+									<div class="my-4" id="sequenceMap"></div>
+								</div>
+								<div id = "siteDiv" class = "ml-sm-auto col-lg-12 border border-dark border-top border-left">
+									<div id = "siteQuant" class = "ml-sm-auto col-lg-12">
+										<h4>Site Stoichiometry</h4>
+										<div id = "siteQuantPlot"></div>
+									</div>
+									<div id = "siteInfo" class="mr-sm-auto col-lg-12">
+										<h4>Site Information</h4>
+										<div id = "siteDescriptionText">
+											Click on a site in the heatmap or sequence map for more information.
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id = "siteTableAccordion">
+						<div class = "card">
+							<div class = "card-header bg-white text-dark" id = "siteTableHeader">
+								<h2>
+									<button class = "btn collapsed" data-toggle = "collapse" data-target = "#siteTableCard" aria-expanded = "false" aria-controls = "siteTableCard">
+										<span data-feather="plus-circle"></span>
+										Toggle Site Table
+									</button>
+								</h2>
+							</div>
+							<div id = "siteTableCard" class="collapse" aria-labelledby="siteTableHeader" data-parent="#siteTableAccordion">
+								<div class = "card-body">
+									<div class="table-responsive" id = "siteTableWrapper"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="noProteinModal" tabindex="-1" role="dialog">
+	        <div class="modal-dialog modal-dialog-centered" role="document">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <h4>No protein with that Gene Symbol or Uniprot accession was observed in the OxiMouse dataset.</h4>
+	                    <p>Query: <p id = "noProteinQuery"></p></p>
+	                    <p>For a complete list of OxiMouse data, visit the <a href="download.html" target="_blank">Download</a> page.</p>
+	                </div>
+	                <div class="modal-footer">
+	                    <button id="noProteinButton" type="button" class="btn btn-outline-secondary btn-lg btn-block" data-dismiss="modal">OK</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="modal fade" id="dataLoadingModal" tabindex="-1" role="dialog">
+	        <div class="modal-dialog modal-dialog-centered" role="document">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <h4>The underlying data is still loading, please wait a moment and try again.</h4>
+	                </div>
+	                <div class="modal-footer">
+	                    <button id="noProteinButton" type="button" class="btn btn-outline-secondary btn-lg btn-block" data-dismiss="modal">OK</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog">
+	        <div class="modal-dialog modal-dialog-centered" role="document">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <h4>Loading data...</h4>
+	                    <img class="mx-auto d-block" src="img/icon_cloud.svg"></img>
+	                </div>
+	                <div class="modal-footer">
+	                    <button id="noProteinButton" type="button" class="btn btn-outline-secondary btn-lg btn-block" data-dismiss="modal">OK</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <script src="js/feature-viewer.nextprot.js"></script> <!-- Contains old JQ ui, keep at top so other js overrides -->
+	    <script src="js/plotly-cartesian.min.js"></script>	    
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.bundle.min.js"></script>
+	    <script src="js/jquery-ui.min.js"></script>
+	    <script src="js/datatables.min.js"></script>
+	    <!-- Icons -->
+	    <script src="js/feather.min.js"></script>
+	    <script>
+			$(function(){
+				$("#sidebar").load("lib/sidebar.html"); 
+			});
+		</script>
+	    <!-- Graphs -->
+	    <script src="js/oximouse_general.js"></script>
+	    <script src="js/oximouse_plots.js"></script>
+		<script src="js/oximouse_sites.js"></script>
+		<script>
+			var siteHeatmapColors = [['0', 'white'],['0.1', 'rgb(141,141,141)'],['0.25', 'rgb(164,11,11)'],['1', 'rgb(214,0,0)']];
+			DisplayModalDiv("","#loadingModal");
+			Query("A0JNU3");
+	    </script>
+	</body>
+</html>

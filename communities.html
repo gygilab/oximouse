@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/oximouse-02.png">
+
+    <title>OxiMouse Dashboard</title>
+
+    <!-- Oximouse CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/pviz-core.css" rel="stylesheet">
+    <link href="css/oximouse.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+	<body>
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<a class="navbar-brand col-lg-2 col-md-3 col-sm-4 mr-0" href="index.html">
+				<img border="0" src="img/oximouse.png" width="100" height="30">
+			</a>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text border border-secondary" id="searchIcon">Search Proteins</span>
+				</div>
+				<input id = "communitySearchInput" class="form-control border border-secondary" type="text" placeholder="Gene Symbol or GeneID" aria-label="Search" aria-describedby="searchIcon">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" id="mainNavSearchButton" aria-describedby="searchIcon">Search</button>
+				</div>
+			</div>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row d-flex flex-column">
+				<div id = "sidebar"></div>
+				<!-- Main dashboard grid -->
+				<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4 flex-grow-1">
+					<div class="container-fluid border-bottom">
+						<div class="row mr-sm-auto col-lg-12">
+							<div class="mr-sm-auto col-lg-6 col-md-6 pt-3 px-4">
+								<h4>BioPlex Community Enrichment</h4>
+								<div class="my-4" id="communityHeatmap"></div>
+							</div>
+							<div class="row mr-sm-auto col-lg-6 col-md-6 pt-3 px-4">
+								<div id = "graph" class = "ml-sm-auto col-lg-12 d-flex flex-column">
+									<h4>Network Overlay</h4>
+									<div class = "row">
+										<nav class = "navbar navbar-expand-lg navbar-light bg-white">
+											<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#graphNavbarDiv" aria-controls="graphNavbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+												<span class="navbar-toggler-icon"></span>
+											</button>
+											<div id = "graphNavbarDiv">
+												<ul class="navbar-nav mr-auto">
+													<li class = "nav-item nav-link">
+														Layout and Zoom:
+													</li>
+													<li class = "nav-item">
+														<a class="nav-link" href="#" onclick = "cy.fit();"><span data-feather="minimize-2"></span> Fit</a>
+													</li>
+													<li class = "nav-item dropdown">
+														<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span data-feather="maximize-2"></span>
+															Relayout
+														</a>
+														<div class="dropdown-menu">
+															<a class="dropdown-item" href="#" onclick = "cy.layout({'name': 'concentric'}).run();">Concentric</a>
+															<a class="dropdown-item" href="#" onclick = "cy.layout({'name': 'cose'}).run();">Spring</a>
+															<a class="dropdown-item" href="#" onclick = "cy.layout({'name': 'grid'}).run();">Grid</a>
+														</div>
+													</li>
+													<li class = "nav-item">
+														<a class="nav-link" href="help.html"><span data-feather="help-circle"></span> Help</a>
+													</li>
+													<li class = "nav-item">
+														<a class="nav-link disabled" id = "graphDescription"></a>
+													</li>
+												</ul>
+											</div>
+										</nav>
+									</div>
+									<div id = "graphPlot" style = "min-height: 50%;max-height: 75%;" class = "ml-sm-auto col-lg-12 flex-grow-1"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade cookieModal" id="noProteinModal" tabindex="-1" role="dialog">
+	        <div class="modal-dialog modal-dialog-centered" role="document">
+	            <div class="modal-content">
+	                <div class="modal-body">
+	                    <h4>No protein with that Gene Symbol or GeneID was observed in the BioPlex Communities dataset.</h4>
+	                    <p>Query: <p id = "noProteinQuery"></p></p>
+	                    <p>For a complete list of OxiMouse data, visit the <a href="download.html" target="_blank">Download</a> page.</p>
+	                </div>
+	                <div class="modal-footer">
+	                    <button id="noProteinButton" type="button" class="btn btn-outline-secondary btn-lg btn-block" data-dismiss="modal">OK</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <!-- Icons -->
+	    <script src="js/feather.min.js"></script>
+	    <script>
+			$(function(){
+				$("#sidebar").load("lib/sidebar.html"); 
+			});
+	    </script>
+	    <!-- External -->
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
+	    <script src="js/oximouse_general.js"></script>
+	    <script src="js/d3.min.js"></script>
+	    <script src="js/plotly-cartesian.min.js"></script>
+	    <script src="js/cytoscape.min.js"></script>
+	    <!-- Oximouse -->
+	    <script src="js/oximouse_plots.js"></script>
+	    <script src="js/oximouse_communities.js"></script>
+	    <script src="js/oximouse.js"></script>
+	    <script>
+			$(function(){
+				$("#sidebar").load("lib/sidebar.html"); 
+			});
+			var cy;
+			var communities;
+		    var communitiesColors = [['0', 'blue'],['0.5', 'white'],['1', 'white']];
+		    DisplayModalDiv("","#waitingModal");
+		    ImportCommunityAnnotations("data/huttlin2017_communities_oxi_overlay.tsv");
+		    ImportInteractionData("data/combinedInteractionList_032019.tsv");
+			ConsumeGraphData("data/communities_tissues_oxi_pval.tsv");
+	    </script>
+	</body>
+</html>

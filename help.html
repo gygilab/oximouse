@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/oximouse-02.png">
+
+    <title>OxiMouse Dashboard</title>
+
+    <!-- Oximouse CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/oximouse.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+	<body>
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<a class="navbar-brand col-lg-2 col-md-3 col-sm-4 mr-0" href="index.html">
+				<img border="0" src="img/oximouse.png" width="100" height="30">
+			</a>
+			<h2>Select Help Options Below</h2>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id = "sidebar"></div>
+			</div>
+		</div>
+		<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4">
+			<div id = "helpAccordion">
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "bgHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#bgCard" aria-expanded = "false" aria-controls = "bgCard">
+								<span data-feather="plus-circle"></span>
+								Background
+							</button>
+						</h2>
+					</div>
+					<div id = "bgCard" class="collapse show" aria-labelledby="bgHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<p>
+								Mammalian tissues engage in specialized physiology that is regulated by post-translational protein modification.  A major mode of protein regulation is initiated by reactive oxygen species (ROS) that modify protein cysteine residues.  ROS regulate a myriad of biological processes and ROS dysregulation has long been implicated in driving age-related dysfunction.  However, the functional targets of ROS modification that drive tissue-specific function and dysfunction in vivo are largely unknown.  To understand the molecular basis for ROS regulation of physiological differences between tissues, here we developed a mass spectrometric technology for the first comprehensive and quantitative mapping of the mouse cysteine redox proteome in vivo.  We report the cysteine redox landscape across 10 mouse tissues, identifying 9,400 proteins, and quantitatively mapping the post-translational state (% modification) of 150,000 cysteines corresponding to 37,000 unique sites, over 27,000 are confidently quantified. This landscape reveals several unexpected and fundamental paradigms of redox signaling. Cysteine redox networks within each tissue are highly selective and confer tissue-specific biology. We identify and functionally validate redox networks that are selectively perturbed in young/aged mice, providing a molecular basis for the longstanding proposed links between redox dysregulation and aging.
+							</p>
+							<p>
+								The OxiMouse web application was developed by Devin Schweppe (Gygi Lab, HMS) and Haopeng Xiao (Chouchani Lab, DFCI/HMS).
+							</p>
+							<p>
+								Please Cite: <b>Haopeng Xiao, et al. 2019</b>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "sitesHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#sitesCard" aria-expanded = "false" aria-controls = "sitesCard">
+								<span data-feather="plus-circle"></span>
+								Oxidation Sites
+							</button>
+						</h2>
+					</div>
+					<div id = "sitesCard" class="collapse" aria-labelledby="sitesHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Cysteine Oxidation</b></h4>
+							<p>
+								Despite cysteine is one of the least abundant amino acids, it is highly conserved across many species. A major mode of post-translational metabolic regulation is initiated through production of reactive oxygen species (ROS) and related species that modify protein function by covalent adduction of cysteine residues.  Because cysteine oxidation is fast, reversible, and often highly selective, it is employed for adaptive modulation of protein function, for example serving to either induce or abolish enzyme activity, or to facilitate or disrupt protein interactions, in response to acute metabolic perturbations. As such, redox regulatory metabolites have been implicated in a vast array of tissue-specific regulatory processes. Moreover, dysregulation of ROS and oxidative signaling is one of the longest postulated underlying causes of physiological decline with age. In this website, we provide oxidation stoichiometry data on cysteine sites. On the “Sites” page, every heatmap shows the full length of a protein. Oxidation sites are colored according to their oxidation% values in each tissue. The second plot aligns observed phosphorylation sites in Phosphomouse and quantified oxidation sites in Oximouse. The barplot presents oxidation% values of a cysteine oxidation site across 20 young and old tissues. 
+							</p>
+							<p>
+								<h4><b>Searching</b></h4>
+								To search for a oxidation sites on a protein of interest, enter a gene symbol or <a href="https://www.uniprot.org/">Uniprot accession</a> number into the search bar at the top of the <a href="index.html">Home</a> or <a href="sites.html">Sites</a> pages.
+							</p>
+							<image style = "max-width: 800px" src="img/searchBar.png"></image>
+							<p>
+								<h4><b>Protein Information</b></h4>
+								Protein information can be found on the left side of the screen for the current protein.
+							</p>
+							<image style = "max-height: 400px" src="img/proteinInformation.png"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "siteQuantHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#siteQuantCard" aria-expanded = "false" aria-controls = "siteQuantCard">
+								<span data-feather="plus-circle"></span>
+								Quantitation and Stoichiometry
+							</button>
+						</h2>
+					</div>
+					<div id = "siteQuantCard" class="collapse" aria-labelledby="siteQuantHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>OxiMouse Quantitation and Oxidation Stoichiometry</b></h4>
+							<p>
+								Despite the fundamental importance of redox regulation in tissue-specific physiology and mammalian aging, there is a surprising dearth of information regarding the protein modifications that explain the molecular basis for these processes in vivo.  Comprehensive analyses of this type are lacking in large part because existing methods are non-quantitative and/or cover a very small proportion of the cysteine proteome.  To address this problem, we developed a novel protocol, enriching very lowly abundant cysteines from highly complex biological samples using Cysteine-reactive phosphate tags (CPT) and Immobilized metal affinity chromatography (IMAC), and combined it with SPS- MS3- TMT to determine modification stoichiometry on cysteines (oxidation%). Cysteine oxidation stoichiometry is crucial because, for instance, a five-fold increase of cysteine oxidation could mean 0.2%-1% or 20%-100% on the stoichiometry level. While a 0.2%-1% change might be important if this oxidation event activates the protein, it would hardly be of any biological meaning if the modification inhibits protein functions. Determining stoichiometry would provide a more direct avenue to asses biological relevance of cysteine oxidation events.
+							</p>
+							<p>
+								<h4><b>Site Stoichiometry</b></h4>
+								Explore site occupancy at the whole protein map level using either the heatmap or the sequence map on the <a target="_blank" href="sites.html">Sites</a> page.
+							</p>
+							<image style = "max-height: 400px" src="img/sitesPage.gif"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "networkHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#networkCard" aria-expanded = "false" aria-controls = "networkCard">
+								<span data-feather="plus-circle"></span>
+								Network Analysis
+							</button>
+						</h2>
+					</div>
+					<div id = "networkCard" class="collapse" aria-labelledby="networkHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Network Analysis Information</b></h4>
+							<p>
+								This analysis seeks answers for two questions: (1) ROS signal through what protein interaction networks to regulate tissue-specific biological processes? and (2) what protein complexes could be forged together by interchain disulfide bonds? By overlaying OxiMouse on Bioplex 2.0, this analysis sheds light on these problems. On the community page, the heatmap presents the enrichment of oxidized proteins in each protein network observed in Bioplex 2.0. Clicking on any network in any tissue, the network is displayed and colored by oxidation% values (red-over 20% oxidized; orange- between 10-20%; skyblue- under 10%; and gray-not quantified).
+							</p>
+							<p>
+								<h4><b>Protein Interactions and Cys-Oxidation</b></h4>
+								Explore the interpaly between cys-oxidation and protein-protein interactions on the <a target="_blank" href="communities.html">Communities</a> page.
+							</p>
+							<image style = "max-height: 400px" src="img/communitiesPage.gif"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadCard" aria-expanded = "false" aria-controls = "downloadCard">
+								<span data-feather="plus-circle"></span>
+								Downloading OxiMouse Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadCard" class="collapse" aria-labelledby="downloadHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<h4><b>Downloads</b></h4>
+							<p>
+								Protein/sites of interest can be downloaded. The file includes oxidation% ± SE in each young and old tissue, along with peptide sequence information and protein annotations.
+							</p>
+							<p>
+								<h4><b>Sites and Communities</b></h4>
+								Download all underlying data on the <a target="_blank" href="download.html">Download</a> page.
+							</p>
+							<image style = "max-height: 400px" src="img/download.png"></image>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "acknowledgementsHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#acknowledgementsCard" aria-expanded = "false" aria-controls = "acknowledgementsCard">
+								<span data-feather="plus-circle"></span>
+								Acknowledgements & Licenses
+							</button>
+						</h2>
+					</div>
+					<div id = "acknowledgementsCard" class="collapse" aria-labelledby="acknowledgementsHeader" data-parent="#helpAccordion">
+						<div class = "card-body">
+							<div class="container-fluid" id="copyright">
+								<h4><b>Acknowledgements</b></h4>
+								The OxiMouse website uses the following tools/frameworks/libraries:
+								<ul>
+									<li><a href="https://feathericons.com/">Feather: Icons</a></li>
+									<li><a href="http://js.cytoscape.org/">Cytoscape.js: Graph plotting</a></li>
+									<li><a href="https://plot.ly/javascript/">Plotly.js: General plotting</a></li>
+									<li><a href="https://github.com/calipho-sib/feature-viewer">nextProt Feature Viewer: Protein Sequence Map</a></li>
+								</ul>
+								<h4><b>Copyright and License Information</b></h4>
+								The OxiMouse website was developed and is licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+								<br /><br />
+								Images presented and generated on the OxiMouse website are licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
+	    <script src="js/oximouse_general.js"></script>
+		<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+		<script>
+			$(function(){
+				$("#sidebar").load("lib/sidebar.html"); 
+			});
+			feather.replace()
+	    </script>
+	</body>
+</html>

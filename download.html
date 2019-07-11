@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../img/oximouse-02.png">
+
+    <title>OxiMouse Dashboard</title>
+
+    <!-- Oximouse CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/pviz-core.css" rel="stylesheet">
+    <link href="css/oximouse.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+	<body>
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<a class="navbar-brand col-lg-2 col-md-3 col-sm-4 mr-0" href="index.html">
+				<img border="0" src="../img/oximouse-01.png" width="150" height="30">
+			</a>
+			<h2>Download OxiMouse Data</h2>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id = "sidebar"></div>
+			</div>
+		</div>
+		<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4">
+			<div id = "downloadAccordion">
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadAllHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadAllCard" aria-expanded = "false" aria-controls = "downloadAllCard">
+								<span data-feather="plus-circle"></span>
+								Download All Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadAllCard" class="collapse" aria-labelledby="downloadAllHeader" data-parent="#downloadAccordion">
+						<div class = "card-body">
+							<h5>Download flat files (tab-separated) containing all data displayed in the OxiMouse website.</h5>
+						</div>
+						<div class = "container-fluid">
+							<h5>Download site stochiometry information for all proteins.</h5>
+							<form id = "downloadSites" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadSitesButton" type="submit"><span data-feather="download"></span>Sites</button>
+							</form>
+							<h5>Download hypergeometric test p-values for oxidation within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
+							<form id = "downloadCommunities" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunitiesButton" type="submit"><span data-feather="download"></span>Communities</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadSpecificHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadSpecificCard" aria-expanded = "false" aria-controls = "downloadSpecificCard">
+								<span data-feather="plus-circle"></span>
+								Download Protein Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadSpecificCard" class="collapse" aria-labelledby="downloadSpecificHeader" data-parent="#downloadAccordion">
+						<div class = "card-body">
+							To download site data (including error) for each protein, open the Site table at the bottom of the <a href="sites.html" target="_blank">Sites</a> page. Choose from one of the download options (copy, csv, excel, or pdf) and click the corresponding button.
+							<image style = "max-height: 400px" src="img/sitesTable.png"></image>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
+	    <script src="js/oximouse_download.js"></script>
+		<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+		<script>
+			$(function(){
+				$("#sidebar").load("lib/sidebar.html"); 
+			});
+			feather.replace()
+	    </script>
+	</body>
+</html>

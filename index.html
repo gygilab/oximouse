@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/oximouse-02.png">
+
+    <title>OxiMouse Dashboard</title>
+
+    <!-- Oximouse CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/pviz-core.css" rel="stylesheet">
+    <link href="css/oximouse.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+  </head>
+
+	<body>
+		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
+			<a class="navbar-brand col-lg-2 col-md-3 col-sm-4 mr-0" href="index.html">
+				<img border="0" src="img/oximouse.png" width="100" height="30">
+			</a>
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="help.html">Help</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div id = "sidebar"></div>
+				<div id = "welcomeAccordion" class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4">
+					<div class = "card">
+						<div class = "card-header text-white bg-secondary" id = "welcomeHeader">
+							<h2>
+								Welcome to OxiMouse!
+							</h2>
+						</div>
+						<div id = "welcomeCard" class="collapse show" aria-labelledby="welcomeHeader" data-parent="#welcomeAccordion">
+							<div class = "card-body">
+								<p>
+									Mammalian tissues engage in specialized physiology that is regulated by post-translational protein modification.  A major mode of protein regulation is initiated by reactive oxygen species (ROS) that modify protein cysteine residues.  ROS regulate a myriad of biological processes and ROS dysregulation has long been implicated in driving age-related dysfunction.  However, the functional targets of ROS modification that drive tissue-specific function and dysfunction in vivo are largely unknown.  To understand the molecular basis for ROS regulation of physiological differences between tissues, here we developed a mass spectrometric technology for the first comprehensive and quantitative mapping of the mouse cysteine redox proteome in vivo.  We report the cysteine redox landscape across 10 mouse tissues, identifying 9,400 proteins, and quantitatively mapping the post-translational state (% modification) of 150,000 cysteines corresponding to 37,000 unique sites, over 27,000 are confidently quantified. This landscape reveals several unexpected and fundamental paradigms of redox signaling. Cysteine redox networks within each tissue are highly selective and confer tissue-specific biology. We identify and functionally validate redox networks that are selectively perturbed in young/aged mice, providing a molecular basis for the longstanding proposed links between redox dysregulation and aging.
+								</p>
+								<h4>To begin, search for a protein at either the <a href="sites.html">Sites</a> or <a href="communities.html">Communities</a></h4>
+								<h5>For additional information, check out the <a href="help.html">Help</a> page</h5>
+								<br />
+								<p>
+									Please Cite: <b>Haopeng Xiao, et al. 2019</b>
+								</p>
+								<br />
+								<img border="0" src="img/oximouse.png" height="100">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	    <!-- Placed at the end of the document so the pages load faster -->
+	    <script>window.jQuery || document.write('<script src="js/jquery-3.4.1.min.js"><\/script>')</script>
+	    <script src="js/feather.min.js"></script>
+	    <script>
+		    var allSiteData;
+			$(function(){
+				$("#sidebar").load("lib/sidebar.html"); 
+			});
+	    </script>
+	    <script src="js/jquery-ui.min.js"></script>
+	    <script src="js/d3.min.js"></script>
+	    <script src="js/feather.min.js"></script>
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/bootstrap.min.js"></script>
+	    <script src="js/oximouse.js"></script>
+	    <script>
+	    	ConsumeSearchData("data/site_all.tsv");
+	    </script>
+	</body>
+</html>
