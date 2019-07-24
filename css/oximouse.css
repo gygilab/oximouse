@@ -1,12 +1,3 @@
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-}
-
 body {
   font-size: .875rem;
 }
@@ -20,6 +11,19 @@ body {
 /*
  * Sidebar
  */
+@media (max-width: 768px) {
+    #sidebarToggle {
+        display: inline !important;
+    }
+    #sidebar {
+    	position: relative;
+    }
+}
+
+#sidebarToggle{
+	display: none;
+}
+
 
 .sidebar {
   position: fixed;

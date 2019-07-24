@@ -4,6 +4,13 @@
 /// Authors, Gygi Lab, President and Fellows of Harvard University
 ///
 
+$(function(){
+	$("#sidebarDiv").load("lib/sidebar.html");
+	$('#sidebarToggle').click(function(){
+		$('#sidebar').toggleClass('d-none');
+	});
+});
+
 function AddExternalLinkListeners(uniprot,geneSymbol){
 	$("#pubmedLink").attr({href: "https://www.ncbi.nlm.nih.gov/pubmed/?term=" + geneSymbol});
 	$("#uniprotLink").attr({href: "https://www.uniprot.org/uniprot/" + uniprot});

@@ -15,16 +15,18 @@
     <link href="css/oximouse.css" rel="stylesheet">
     <link href="css/jquery-ui.min.css" rel="stylesheet">
     <link href="css/datatables.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
   </head>
 
 	<body>
 		<nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0">
-			<a class="navbar-brand col-lg-2 col-md-3 col-sm-4 mr-0" href="index.html">
-				<img border="0" src="img/oximouse.png" width="100" height="30">
-			</a>
+			<div id = "brandSidebar" class = "col-lg-2 col-md-3 col-sm-4 mr-0">
+				<a class="navbar-brand" href="index.html">
+					<img border="0" src="img/oximouse.png" width="100" height="30">
+				</a>
+				<button class="btn btn-outline-secondary" type="button" id = "sidebarToggle">
+					<span data-feather="align-left"></span>
+				</button>
+			</div>
 			<div class="input-group">
 				<div class="input-group-prepend">
 					<span class="input-group-text border border-secondary" id="searchIcon">Search Proteins</span>
@@ -43,10 +45,10 @@
 
 		<div class="container-fluid">
 			<div class="row">
-				<div id = "sidebar"></div>
+				<div id = "sidebarDiv"></div>
 	
 				<!-- Main dashboard grid -->
-				<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4">
+				<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4" id = "dashboardBody">
 					<div class="container-fluid border-bottom">
 						<div class="row mr-sm-auto col-lg-12">
 							<div class="mr-sm-auto col-lg-5 col-md-5 pt-3 px-4 shadow-sm">
@@ -99,7 +101,7 @@
 	            <div class="modal-content">
 	                <div class="modal-body">
 	                    <h4>No protein with that Gene Symbol or Uniprot accession was observed in the OxiMouse dataset.</h4>
-	                    <p>Query: <p id = "noProteinQuery"></p></p>
+	                    <p>Query: <p id = "noProteinQuery"></p>
 	                    <p>For a complete list of OxiMouse data, visit the <a href="download.html" target="_blank">Download</a> page.</p>
 	                </div>
 	                <div class="modal-footer">
@@ -143,12 +145,7 @@
 	    <script src="js/datatables.min.js"></script>
 	    <!-- Icons -->
 	    <script src="js/feather.min.js"></script>
-	    <script>
-			$(function(){
-				$("#sidebar").load("lib/sidebar.html"); 
-			});
-		</script>
-	    <!-- Graphs -->
+	    <!-- Oximouse -->
 	    <script src="js/oximouse_general.js"></script>
 	    <script src="js/oximouse_plots.js"></script>
 		<script src="js/oximouse_sites.js"></script>
@@ -156,6 +153,7 @@
 			var siteHeatmapColors = [['0', 'white'],['0.1', 'rgb(141,141,141)'],['0.25', 'rgb(164,11,11)'],['1', 'rgb(214,0,0)']];
 			DisplayModalDiv("","#loadingModal");
 			Query("A0JNU3");
-	    </script>
+			feather.replace();
+		</script>
 	</body>
 </html>
