@@ -49,7 +49,7 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 			uniprotFeatures = [...new Set(result[0].features.filter(b=>b.type == "MOD_RES" && b.description.includes(additionalSiteMap)).map(b=>+b["begin"]))];
 			$(targetDiv).empty();
 			NewSequenceMap(targetDiv,sequence,GenerateFeature(SitesToPositions(uniprotFeatures),additionalSiteMap));
-			ConsumeSiteData("data/site_all_1.csv",accession);			
+			ConsumeSiteData("data/site_all.csv",accession);			
 		}
 		return result;
 	}).fail(function() { DisplayModalDiv(accession); });
