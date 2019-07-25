@@ -16,6 +16,7 @@
 let uniprotQuery; let uniprotFeatures;
 let tissues; let sortedTissues; let Tissues;
 let sequence; let sequenceArray;
+let currentSite = 1;
 let proteinSites; let sitePositions; let siteFeatures;
 let proteinQuant; let proteinError;
 let allSiteData; let proteinList;
@@ -95,30 +96,31 @@ $("#fullOrModOnlyToggleHeatmap").click(function() {
 	ToggleHeatmap();
 });
 
-let orderByTissue = false;
-function ReorderTissuePlots(targetDiv = 'siteHeatmap'){
-	let tempTissues = tissues.map(b=>b);
-	let tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[502][i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
-	tempTissues.sort();
-	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
-	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
-	PlotListener(targetDiv,"siteDescriptionText", tempTissues, tissueValues, modifiedError,sitePositions,true);
-	onlyModInHeatmap = true;
-}
-
-function ToggleTissueOrder(){
-	if(!orderByTissue){
-		ReorderTissuePlots();
+let orderedByTissue = false;
+function ReorderBarPlotByTissue(targetDiv = 'siteQuantPlot'){
+	let tempTissues; let tissueValues;
+	let tempError = proteinError[sitePositions.indexOf(currentSite)];
+	if(!orderedByTissue){
+		tempTissues = tissues.map(b=>b);
+		tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[currentSite - 1][i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
+		tempError = tempTissues.map((b,i)=> [ b, tempError[i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
+		tempTissues.sort();
+		orderedByTissue = true;
 		$("#tissueOrderToggle").html("Order By Age");
-	} else{
-		BuildMaps();
+		
+	} else {
+		tempTissues = tissues.map(b=>b);
+		tissueValues = proteinSites[currentSite - 1];
+		orderedByTissue = false;
 		$("#tissueOrderToggle").html("Order By Tissue");
 	}
+	PlotlyBar('siteQuantPlot', tempTissues, tissueValues, 0,tempError);
+	//PlotlyBar(targetDiv,xvals,yvals,targetX = 0,yerror, yaxTitle = "% Occupancy")
 }
 
 
 $("#tissueOrderToggle").click(function() {
-	ToggleTissueOrder();
+	ReorderBarPlotByTissue();
 });
 
 
@@ -299,6 +301,7 @@ function AddFeatureViewListener(dataArray, headerArray, errorArray, siteArray, t
 	    	let el = $('#' + descriptionDiv);
 		    el.empty();
 		    el.append(jsonToTable({"Mod": "Cys-Oxidation","Site": d.detail.start}));
+		    currentSite = d.detail.start;
 	    }
 	});
 }

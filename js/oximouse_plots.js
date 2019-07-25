@@ -83,8 +83,14 @@ function PlotListener(plotId,updateId, headerArray, dataArray, errorArray, siteA
 		    	}
 		    	if(subset){
 			    	error = errorArray[d.pointNumber[0]];
+			    	if(typeof currentSite !== "undefined"){
+				    	currentSite = sitePositions[d.pointNumber[0]];
+			    	}
 		    	} else {
 		    		error = errorArray[siteArray.indexOf(sitePosition)];
+			    	if(typeof currentSite !== "undefined"){
+				    	currentSite = d.pointNumber[0] + 1;
+			    	}
 		    	}
 		    	PlotlyBar('siteQuantPlot', headerArray, dataArray[d.pointNumber[0]], d.pointNumber[1],error);
 		    }
