@@ -56,7 +56,7 @@ function NewHeatmap(plotId,x,y,z,color = 'Hot',margins = [55,50,55,30],minMax = 
  * @param updateId
  * @returns
  */
-function PlotListener(plotId,updateId, headerArray, dataArray, errorArray, siteArray, subset = false){
+function PlotListener(plotId,updateId, headerArray, dataArray, errorArray, siteArray, subset = false, reOrder= false){
 	var heatmapPlot = document.getElementById(plotId),
 		d3 = Plotly.d3,
 		N = 100,
@@ -71,13 +71,16 @@ function PlotListener(plotId,updateId, headerArray, dataArray, errorArray, siteA
 	};
 	
 	heatmapPlot.on('plotly_click', function(data){
-		var infotext = data.points.map(function(d){
-			var sitePosition = d.pointNumber[0] + 1;
+		let infotext = data.points.map(function(d){
+			let sitePosition = d.pointNumber[0] + 1;
 		    if(typeof errorArray !== "undefined" && (siteArray.includes(sitePosition) || subset)){
 			    var el = $('#' + updateId);
 			    el.empty();
 			    el.append(jsonToTable({"Mod": "Cys-Oxidation","Site": d.y}));
 		    	var error;
+		    	if(reOrder){
+		    		let orderedValues = headerArray.map((b,i)=> [ b, dataArray[i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
+		    	}
 		    	if(subset){
 			    	error = errorArray[d.pointNumber[0]];
 		    	} else {

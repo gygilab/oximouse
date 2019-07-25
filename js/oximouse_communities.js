@@ -10,13 +10,13 @@
  * @returns
  */
 function ConsumeGraphData(newDataSource){
-    var communityKeys; var communities; var communityNumbers;
+    var communities; var communityNumbers;
     d3.tsv(newDataSource).then(function(value) {
     	//prep data
     	var tempCommunities = Array.from(value);
     	communities = Array.from({length: tempCommunities.length}, () => Array());
 	    var communityNumbers = Array();//this is (cluster.num - 1)
-	    var communityKeys = Object.keys(tempCommunities[0]); 
+	    communityKeys = Object.keys(tempCommunities[0]); 
 	    delete communityKeys[0]; //remove cluster_no
 	    for(community in tempCommunities){
 	    	communityNumbers.push(tempCommunities[community].cluster_no);
@@ -30,6 +30,7 @@ function ConsumeGraphData(newDataSource){
 	    //plot
 	    NewHeatmap("communityHeatmap",communityKeys,communityNumbers,communities,communitiesColors,[55,50,150,30],[0,0.1],"BioPlex 2.0 Community", "Tissue_AgeGroup", "p-value");
 	    GraphListener('communityHeatmap','graphDescription','graphPlot');
+	    updateTissueGraphDropdown(communityKeys);
 	    cytoscape.warnings(false);
     });
 }
@@ -39,6 +40,23 @@ $("#communitySearchInput").keypress(function(e) {
 		SearchCommunities(document.getElementById('communitySearchInput').value);
 	}
 });
+
+/**
+ * 
+ * @param stringArray
+ * @param targetDiv
+ * @returns
+ */
+function updateTissueGraphDropdown(stringArray,targetDiv = "graphTissueDropdown"){
+	for(var item in stringArray){
+		var newA = document.createElement("a");
+		newA.className = "dropdown-item";
+		newA.href = "#";
+		newA.setAttribute("onClick","GenerateNewGraph('graphPlot','graphDescription', currentCommunity ,'" + stringArray[item] + "');");
+		newA.innerHTML = stringArray[item];
+		document.getElementById(targetDiv).appendChild(newA);
+	}
+}
 
 /**
  * Search for a symbol or geneID
@@ -280,6 +298,7 @@ function GraphListener(plotId, updateId, graphId){
  * @returns
  */
 function GenerateNewGraph(graphId, textId, clusterNo, dataColumn, columnNames = ["GeneID1","GeneID2"]){
+	currentCommunity = clusterNo;
     var el = $('#' + textId);
     el.empty();
     el.html("Community: " + clusterNo + "<br /> Sample: " + dataColumn);

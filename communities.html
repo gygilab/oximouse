@@ -79,6 +79,13 @@
 															<a class="dropdown-item" href="#" onclick = "cy.layout({'name': 'grid'}).run();">Grid</a>
 														</div>
 													</li>
+													<li class = "nav-item dropdown">
+														<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span data-feather="upload-cloud"></span>
+															Tissue
+														</a>
+														<div class="dropdown-menu" id = "graphTissueDropdown"></div>
+													</li>
 													<li class = "nav-item">
 														<a class="nav-link" href="help.html"><span data-feather="help-circle"></span> Help</a>
 													</li>
@@ -128,7 +135,7 @@
 	    <script src="js/oximouse.js"></script>
 	    <script>
 			var cy;
-			var communities;
+			var communities; var communityKeys; var currentCommunity = 0;
 		    var communitiesColors = [['0', 'blue'],['0.5', 'white'],['1', 'white']];
 		    DisplayModalDiv("","#waitingModal");
 		    ImportCommunityAnnotations("data/huttlin2017_communities_oxi_overlay.tsv");

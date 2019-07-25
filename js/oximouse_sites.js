@@ -48,7 +48,7 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 			uniprotFeatures = [...new Set(result[0].features.filter(b=>b.type == "MOD_RES" && b.description.includes(additionalSiteMap)).map(b=>+b["begin"]))];
 			$(targetDiv).empty();
 			NewSequenceMap(targetDiv,sequence,GenerateFeature(SitesToPositions(uniprotFeatures),additionalSiteMap));
-			ConsumeSiteData("data/site_all.tsv",accession);			
+			ConsumeSiteData("data/site_all_1.csv",accession);			
 		}
 		return result;
 	}).fail(function() { DisplayModalDiv(accession); });
@@ -102,13 +102,12 @@ function ReorderTissuePlots(targetDiv = 'siteHeatmap'){
 	tempTissues.sort();
 	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
 	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
-	NewHeatmap(targetDiv,tempTissues,sequenceArray.filter((b,i)=> sitePositions.includes(i+1)),proteinSites,siteHeatmapColors,[60,50,150,30]);
 	PlotListener(targetDiv,"siteDescriptionText", tempTissues, tissueValues, modifiedError,sitePositions,true);
 	onlyModInHeatmap = true;
 }
 
 function ToggleTissueOrder(){
-	if(!onlyModInHeatmap){
+	if(!orderByTissue){
 		ReorderTissuePlots();
 		$("#tissueOrderToggle").html("Order By Age");
 	} else{
@@ -128,7 +127,7 @@ $("#tissueOrderToggle").click(function() {
  * @param newDataSource
  * @returns
  */
-function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "sequence_"){
+function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "oxi_percent_"){
 	if(typeof allSiteData !== "undefined"){
     	//prep data
     	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
@@ -142,7 +141,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "s
     	BuildMaps();
 		return;
 	}
-    return d3.tsv(newDataSource, function(value) {
+    return d3.csv(newDataSource, function(value) {
     	//generate protein list for searching
     	allSiteData = value;
 		$( "#sitesSearchInput" ).autocomplete({
