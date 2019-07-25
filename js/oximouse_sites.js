@@ -1,7 +1,7 @@
 //Oximouse js fnxns
 /// @author Devin K Schweppe
 /// All rights reserved, 2019
-/// Authors, Gygi Lab, President and Fellows of Harvard University
+/// Authors, Gygi Lab, President and Fellows of Harletd University
 ///
 
 /**
@@ -13,11 +13,12 @@
  * 
  */
 
-var uniprotQuery; var uniprotFeatures;
-var tissues; var sequence; var sequenceArray;
-var proteinSites; var sitePositions; var siteFeatures;
-var proteinQuant; var proteinError;
-var allSiteData; var proteinList;
+let uniprotQuery; let uniprotFeatures;
+let tissues; let sortedTissues; let Tissues;
+let sequence; let sequenceArray;
+let proteinSites; let sitePositions; let siteFeatures;
+let proteinQuant; let proteinError;
+let allSiteData; let proteinList;
 
 function DisplayModalDiv(queryString,targetDiv = "#noProteinModal"){
 	$("#noProteinQuery").html(boldText(queryString));
@@ -31,14 +32,14 @@ function DisplayModalDiv(queryString,targetDiv = "#noProteinModal"){
  * @returns
  */
 function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additionalSiteMap = "Phospho"){
-	var requestUrl = "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
+	let requestUrl = "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
 	requestUrl += accession;
 	DisplayModalDiv("","#loadingModal");
 	return $.getJSON(requestUrl).done(function(result){
-		var geneName = result[0].gene[0].name.value;
-		var accessionNumber = uniprotQuery = result[0].accession;
-		var proteinName = result[0].protein.recommendedName.fullName.value;
-		var commentFunction = result[0].comments.filter(b=>b.type == "FUNCTION")[0].text[0].value;
+		let geneName = result[0].gene[0].name.value;
+		let accessionNumber = uniprotQuery = result[0].accession;
+		let proteinName = result[0].protein.recommendedName.fullName.value;
+		let commentFunction = result[0].comments.filter(b=>b.type == "FUNCTION")[0].text[0].value;
 		$("#proteinInformation").html(jsonToTable({"Protein Info": "","Accession": accessionNumber,"Gene": geneName,"Protein": proteinName,"Fnxn": commentFunction,}));
 		AddExternalLinkListeners(accessionNumber,geneName);
 		if(sequenceOnly){
@@ -70,10 +71,10 @@ function BuildMaps(){
 	onlyModInHeatmap = false;
 }
 
-var onlyModInHeatmap = false;
+let onlyModInHeatmap = false;
 function OnlyModResHeatmap(targetDiv = 'siteHeatmap'){
-	var modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
-	var modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
+	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
+	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
 	NewHeatmap(targetDiv,tissues,sequenceArray.filter((b,i)=> sitePositions.includes(i+1)),modifiedProteinSites,siteHeatmapColors,[60,50,150,30]);
 	PlotListener(targetDiv,"siteDescriptionText", tissues, modifiedProteinSites, modifiedError,sitePositions,true);
 	onlyModInHeatmap = true;
@@ -94,6 +95,33 @@ $("#fullOrModOnlyToggleHeatmap").click(function() {
 	ToggleHeatmap();
 });
 
+let orderByTissue = false;
+function ReorderTissuePlots(targetDiv = 'siteHeatmap'){
+	let tempTissues = tissues.map(b=>b);
+	let tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[502][i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
+	tempTissues.sort();
+	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
+	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
+	NewHeatmap(targetDiv,tempTissues,sequenceArray.filter((b,i)=> sitePositions.includes(i+1)),proteinSites,siteHeatmapColors,[60,50,150,30]);
+	PlotListener(targetDiv,"siteDescriptionText", tempTissues, tissueValues, modifiedError,sitePositions,true);
+	onlyModInHeatmap = true;
+}
+
+function ToggleTissueOrder(){
+	if(!onlyModInHeatmap){
+		ReorderTissuePlots();
+		$("#tissueOrderToggle").html("Order By Age");
+	} else{
+		BuildMaps();
+		$("#tissueOrderToggle").html("Order By Tissue");
+	}
+}
+
+
+$("#tissueOrderToggle").click(function() {
+	ToggleTissueOrder();
+});
+
 
 /**
  * Consume flat file data, featureViewer relies on d3 v3.5, use that for tsv reading
@@ -105,7 +133,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "s
     	//prep data
     	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
-    	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,""));
+    	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
     	proteinSites = RandomMultiDimArray(sequence.length,tissues.length,0);
     	//build UI
     	UpdateProteinSitesFromArray(sitePositions,proteinQuant);
@@ -124,7 +152,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "s
     	//prep data
     	proteinQuant = value.filter(b=>b.Uniprot == uniprotAccessionQuery);
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
-    	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,""));
+    	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
     	proteinSites = RandomMultiDimArray(sequence.length,tissues.length,0);
     	//build UI
     	UpdateProteinSitesFromArray(sitePositions,proteinQuant);
@@ -156,7 +184,7 @@ function SearchSites(query, focus = true){
 	if(typeof allSiteData == "undefined"){
 		DisplayModalDiv("","#dataLoadingModal");
 	}
-	var protein;
+	let protein;
 	protein = allSiteData.filter(b=>b.Gene.toUpperCase() == query.toUpperCase() || b.Uniprot.toUpperCase() == query.toUpperCase());
 	if(protein.length < 1){
 		DisplayModalDiv(query);
@@ -174,9 +202,9 @@ function SearchSites(query, focus = true){
  * @returns
  */
 function UpdateProteinSitesFromArray(sitesArray, quantArray, update = true, keyFinder = "oxi_percent_", addNewFeatures = true){
-	var quantKeys = Object.keys(quantArray[0]).filter((b)=>b.includes(keyFinder));
+	let quantKeys = Object.keys(quantArray[0]).filter((b)=>b.includes(keyFinder));
 	//brutal...
-	var quantOutput = quantArray.map(b=> Object.keys(b).filter((c,i) => c.includes(keyFinder)).map(function(d) {
+	let quantOutput = quantArray.map(b=> Object.keys(b).filter((c,i) => c.includes(keyFinder)).map(function(d) {
 			if(isNaN(+b[d])) { return 0; } else { return +b[d]; }
 		}));
 	if(update){
@@ -201,11 +229,11 @@ function UpdateProteinSitesFromArray(sitesArray, quantArray, update = true, keyF
  * @returns
  */
 function PullSitesFromArray(quantArray = proteinQuant, delim = "_"){
-	var siteArray = quantArray.site.split(delim);
+	let siteArray = quantArray.site.split(delim);
 	return +siteArray[siteArray.length - 1];
 }
 
-var featureViewer;
+let featureViewer;
 /**
  * Using nextProt's sequence feature mapper
  * @param sequenceMapTarget
@@ -214,7 +242,7 @@ var featureViewer;
  * @returns
  */
 function NewSequenceMap(sequenceMapTarget, sequence, newFeature){
-	var options = {showAxis: true, showSequence: true,brushActive: true, toolbar:true,bubbleHelp: false, zoomMax:3 };
+	let options = {showAxis: true, showSequence: true,brushActive: true, toolbar:true,bubbleHelp: false, zoomMax:3 };
 	featureViewer = new FeatureViewer(sequence, sequenceMapTarget,options);
 	if(typeof newFeature !== "undefined"){
 		featureViewer.addFeature(newFeature);
@@ -232,7 +260,7 @@ function NewSequenceMap(sequenceMapTarget, sequence, newFeature){
  * @returns
  */
 function GenerateFeature(positions = [{x:1,y:1},{x:10,y:10},{x:20,y:20}], name = "Oxidation", color = "#a40b0b",type = "rect"){
-	var tempFeature = {
+	let tempFeature = {
 	    data: positions,
 	    name: name,
 	    className: name,
@@ -253,13 +281,23 @@ function SitesToPositions(siteArray){
 	return siteArray.map(function(b) { return {x: b, y: b}; })
 }
 
+/**
+ * 
+ * @param dataArray
+ * @param headerArray
+ * @param errorArray
+ * @param siteArray
+ * @param targetDiv
+ * @param descriptionDiv
+ * @returns
+ */
 function AddFeatureViewListener(dataArray, headerArray, errorArray, siteArray, targetDiv = 'siteQuantPlot', descriptionDiv = "siteDescriptionText"){
 	featureViewer.onFeatureSelected(function (d) {
-		var siteIndex = d.detail.start - 1;
+		let siteIndex = d.detail.start - 1;
 	    if(typeof errorArray !== "undefined" && siteArray.includes(d.detail.start)){
-	    	var error = errorArray[siteArray.indexOf(d.detail.start)];
+	    	let error = errorArray[siteArray.indexOf(d.detail.start)];
 	    	PlotlyBar(targetDiv, headerArray, dataArray[siteIndex], -1, error);
-	    	var el = $('#' + descriptionDiv);
+	    	let el = $('#' + descriptionDiv);
 		    el.empty();
 		    el.append(jsonToTable({"Mod": "Cys-Oxidation","Site": d.detail.start}));
 	    }

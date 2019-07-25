@@ -14,6 +14,7 @@ body {
 @media (max-width: 768px) {
     #sidebarToggle {
         display: inline !important;
+        cursor: pointer !important;
     }
     #sidebar {
     	position: relative;

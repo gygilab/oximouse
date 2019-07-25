@@ -128,7 +128,7 @@ function PlotlyBar(targetDiv,xvals,yvals,targetX = 0,yerror, yaxTitle = "% Occup
 		paper_bgcolor: 'white',
 		plot_bgcolor: 'white' ,
 		xaxis:{
-			fixedrange: true,
+			fixedrange: false,
 			showticklabels: true,
 			showgrid: false,
 			zeroline: true,
