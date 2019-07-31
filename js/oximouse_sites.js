@@ -33,7 +33,7 @@ function DisplayModalDiv(queryString,targetDiv = "#noProteinModal"){
  * @returns
  */
 function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additionalSiteMap = "Phospho"){
-	SendGaEvent(accession, 'Site Query');
+	SendGaEvent(accession, 'Site Query Initiated');
 	let requestUrl = "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
 	requestUrl += accession;
 	DisplayModalDiv("","#loadingModal");
@@ -193,6 +193,7 @@ function SearchSites(query, focus = true){
 		return false;
 	}
 	siteFeatures = undefined;
+	SendGaEvent(query + "_" + protein[0].Uniprot, 'Site Query');
 	Query(protein[0].Uniprot);
 }
 
