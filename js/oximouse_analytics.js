@@ -304,15 +304,6 @@ function GiveCookie(cookVal,cookName = "EU_COOKIE_LAW_CONSENT",expDays = 30){
 	});
 	
 	/**
-	 * Send GA analytics for page
-	 * @returns
-	 */
-	function InitiateAnalytics(){
-		SendGaPageView();
-		CreateGa();
-	}
-
-	/**
 	 * Create the GA connection
 	 * @returns
 	 */
@@ -321,7 +312,15 @@ function GiveCookie(cookVal,cookName = "EU_COOKIE_LAW_CONSENT",expDays = 30){
 			ga('create', 'UA-144896065-1', 'auto', 'oximouse');
 		}
 	}
-	
+	/**
+	 * Send GA analytics for page
+	 * @returns
+	 */
+	function InitiateAnalytics(){
+		CreateGa();
+		SendGaPageView();
+	}
+
 	$(document).ready( function() {
 		if ($(".eupopup").length > 0) {
 			$(document).euCookieLawPopup().init({
