@@ -1,76 +1,55 @@
-(function(){
-	
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-	/**
-	 * Get cookie to keep track of user consent
-	 * @returns
-	 */
-	function GetCookie(cookName = "EU_COOKIE_LAW_CONSENT"){
-		var cookies = document.cookie.split(";").filter(b=>b.includes(cookName));
-		if(cookies.length > 0){
-			return cookies[0].replace(cookName +"=","").replace(" ","");
-		} else{
-			return "";
-		}
+/**
+ * Get cookie to keep track of user consent
+ * @returns
+ */
+function GetCookie(cookName = "EU_COOKIE_LAW_CONSENT"){
+	var cookies = document.cookie.split(";").filter(b=>b.includes(cookName));
+	if(cookies.length > 0){
+		return cookies[0].replace(cookName +"=","").replace(" ","");
+	} else{
+		return "";
 	}
+}
 
-	/**
-	 * Send new event to GA
-	 * @param eventValue
-	 * @param eventName
-	 * @returns
-	 */
-	function SendGaEvent(eventValue, eventName = 'User Gene Input'){
-		if(GetCookie()){
-			ga('oximouse.send','event',eventName,eventValue);
-		}
+/**
+ * Send new event to GA
+ * @param eventValue
+ * @param eventName
+ * @returns
+ */
+function SendGaEvent(eventValue, eventName = 'User Gene Input'){
+	if(GetCookie()){
+		ga('oximouse.send','event',eventName,eventValue);
 	}
+}
 
-	/**
-	 * Send new Pageview to GA
-	 * @returns
-	 */
-	function SendGaPageView(){
-		if(GetCookie()){
-			ga('oximouse.send', 'pageview');
-		}
+/**
+ * Send new Pageview to GA
+ * @returns
+ */
+function SendGaPageView(){
+	if(GetCookie()){
+		ga('oximouse.send', 'pageview');
 	}
-	
-	/**
-	 * Send GA analytics for page
-	 * @returns
-	 */
-	function InitiateAnalytics(){
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-		analyticsInitiated = true;
-		SendGaPageView();
-		CreateGa();
-	}
-	
-	/**
-	 * Give cookie to keep track of user consent, 30 day expiration
-	 * @returns
-	 */
-	function GiveCookie(cookVal,cookName = "EU_COOKIE_LAW_CONSENT",expDays = 30){
-		var date = new Date();
-		date.setTime(date.getTime() + (expDays*24*60*60*1000));
-		var expires = "expires=" + date.toUTCString();
-		document.cookie = cookName + "=" + cookVal + ";" + expires + ";path=/";
-	}
-	
-	/**
-	 * Create the GA connection
-	 * @returns
-	 */
-	function CreateGa(){
-		if(GetCookie()){
-			ga('create', 'UA-144896065-1', 'auto', 'oximouse');
-		}
-	}
-})();
+}
+
+/**
+ * Give cookie to keep track of user consent, 30 day expiration
+ * @returns
+ */
+function GiveCookie(cookVal,cookName = "EU_COOKIE_LAW_CONSENT",expDays = 30){
+	var date = new Date();
+	date.setTime(date.getTime() + (expDays*24*60*60*1000));
+	var expires = "expires=" + date.toUTCString();
+	document.cookie = cookName + "=" + cookVal + ";" + expires + ";path=/";
+}
+
+
 
 /**
 *
@@ -324,6 +303,25 @@
 		return publicfunc;
 	});
 	
+	/**
+	 * Send GA analytics for page
+	 * @returns
+	 */
+	function InitiateAnalytics(){
+		SendGaPageView();
+		CreateGa();
+	}
+
+	/**
+	 * Create the GA connection
+	 * @returns
+	 */
+	function CreateGa(){
+		if(GetCookie()){
+			ga('create', 'UA-144896065-1', 'auto', 'oximouse');
+		}
+	}
+	
 	$(document).ready( function() {
 		if ($(".eupopup").length > 0) {
 			$(document).euCookieLawPopup().init({
@@ -335,8 +333,10 @@
 	});
 	
 	$(document).bind("user_cookie_consent_changed", function(event, object) {
-		console.log("User cookie consent changed: " + $(object).attr('consent') );
-	});
-
+		//console.log("User cookie consent changed: " + $(object).attr('consent') );
+		if($(object).attr('consent')){
+			InitiateAnalytics();
+		}
+	});	
 }(jQuery));
 
