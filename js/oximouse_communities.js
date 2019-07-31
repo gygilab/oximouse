@@ -298,6 +298,7 @@ function GraphListener(plotId, updateId, graphId){
  * @returns
  */
 function GenerateNewGraph(graphId, textId, clusterNo, dataColumn, columnNames = ["GeneID1","GeneID2"]){
+	SendGaEvent(clusterNo, 'Cluster Query');
 	currentCommunity = clusterNo;
     var el = $('#' + textId);
     el.empty();

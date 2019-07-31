@@ -33,6 +33,7 @@ function DisplayModalDiv(queryString,targetDiv = "#noProteinModal"){
  * @returns
  */
 function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additionalSiteMap = "Phospho"){
+	SendGaEvent(accession, 'Site Query');
 	let requestUrl = "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
 	requestUrl += accession;
 	DisplayModalDiv("","#loadingModal");
