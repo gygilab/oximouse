@@ -17,5 +17,5 @@ ga('oximouse.send', 'pageview');
  * @returns
  */
 function SendGaEvent(eventValue, eventName = 'User Gene Input'){
-	ga('send','event',eventName,eventValue);
+	ga('oximouse.send','event',eventName,eventValue);
 }
