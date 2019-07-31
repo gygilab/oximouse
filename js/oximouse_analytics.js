@@ -7,9 +7,7 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-92567349-1', 'auto', 'oximouse');
-ga('oximouse.send', 'pageview');
-ga('create', 'UA-64033549-1', 'auto', 'oximouse');
+ga('create', 'UA-144896065-1', 'auto', 'oximouse');
 ga('oximouse.send', 'pageview');
 
 /**
