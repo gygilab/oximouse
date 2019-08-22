@@ -325,8 +325,8 @@ function GiveCookie(cookVal,cookName = "EU_COOKIE_LAW_CONSENT",expDays = 30){
 		if ($(".eupopup").length > 0) {
 			$(document).euCookieLawPopup().init({
 				'info' : 'YOU_CAN_ADD_MORE_SETTINGS_HERE',
-				'popupTitle' : 'This website is using cookies. ',
-				'popupText' : 'We use them to give you the best experience. If you continue using our website, we\'ll assume that you are happy to receive all cookies on this website.'
+				'popupTitle' : ' The OxiMouse Website is using cookies.',
+				'popupText' : 'We use them to monitor site security. If you continue using our website, we\'ll assume that you are happy to receive all cookies on this website.'
 			});
 		}
 	});

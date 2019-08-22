@@ -41,7 +41,12 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 		let geneName = result[0].gene[0].name.value;
 		let accessionNumber = uniprotQuery = result[0].accession;
 		let proteinName = result[0].protein.recommendedName.fullName.value;
-		let commentFunction = result[0].comments.filter(b=>b.type == "FUNCTION")[0].text[0].value;
+		let commentFunction;
+		if(result[0].comments.filter(b=>b.type == "FUNCTION").length == 0){
+			commentFunction = "No known function found in Uniprot";
+		} else {
+			commentFunction = result[0].comments.filter(b=>b.type == "FUNCTION")[0].text[0].value;
+		}
 		$("#proteinInformation").html(jsonToTable({"Protein Info": "","Accession": accessionNumber,"Gene": geneName,"Protein": proteinName,"Fnxn": commentFunction,}));
 		AddExternalLinkListeners(accessionNumber,geneName);
 		if(sequenceOnly){
