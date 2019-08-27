@@ -50,12 +50,12 @@
 					<div class="container-fluid border-bottom">
 						<div class="row mr-sm-auto col-lg-12">
 							<div class="mr-sm-auto col-lg-6 col-md-6 pt-3 px-4">
-								<h4>BioPlex Community Enrichment</h4>
+								<h4 id="communityEnrichmentLabel">BioPlex Community Enrichment</h4>
 								<div class="my-4" id="communityHeatmap"></div>
 							</div>
 							<div class="row mr-sm-auto col-lg-6 col-md-6 pt-3 px-4">
 								<div id = "graph" class = "ml-sm-auto col-lg-12 d-flex flex-column">
-									<h4>Network Overlay</h4>
+									<h4 id="networkLabel">Network Overlay</h4>
 									<div class = "row">
 										<nav class = "navbar navbar-expand-lg navbar-light bg-white">
 											<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#graphNavbarDiv" aria-controls="graphNavbarDiv" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,6 +131,8 @@
 	    <script src="js/bootstrap.min.js"></script>
 	    <script src="js/d3.min.js"></script>
 	    <script src="js/plotly-cartesian.min.js"></script>
+	    <script src="js/popper.min.js"></script>
+	    <script src="js/tippy_4-3-5.min.js"></script>
 	    <script src="js/cytoscape.min.js"></script>
 	    <!-- Oximouse -->
 	    <script src="js/oximouse_general.js"></script>
@@ -141,11 +143,18 @@
 			var cy;
 			var communities; var communityKeys; var currentCommunity = 0;
 		    var communitiesColors = [['0', 'blue'],['0.5', 'white'],['1', 'white']];
-		    DisplayModalDiv("","#waitingModal");
-		    ImportCommunityAnnotations("data/huttlin2017_communities_oxi_overlay.tsv");
-		    ImportInteractionData("data/combinedInteractionList_032019.tsv");
-			ConsumeGraphData("data/communities_tissues_oxi_pval.tsv");
-			feather.replace();
+			(function(){
+				tippy('#communityEnrichmentLabel', {
+					  content: "Oxidation sites are colored according to their oxidation % values in each tissue. Click to plot Site Stoichiometry.",
+					});
+				tippy('#networkLabel', {
+					  content: "Graph display of selected BioPlex community. Colored by oxidation % values (red: >20%; orange: 10-20%; skyblue: <10%; gray: NQ).",
+					});
+			    DisplayModalDiv("","#waitingModal");
+			    ImportCommunityAnnotations("data/huttlin2017_communities_oxi_overlay.tsv");
+			    ImportInteractionData("data/combinedInteractionList_032019.tsv");
+				ConsumeGraphData("data/communities_tissues_oxi_pval.tsv");
+			})();
 		</script>
 	</body>
 </html>
