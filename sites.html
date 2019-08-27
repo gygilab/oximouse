@@ -53,13 +53,13 @@
 					<div class="container-fluid border-bottom">
 						<div class="row mr-sm-auto col-lg-12">
 							<div class="mr-sm-auto col-lg-5 col-md-5 pt-3 px-4 shadow-sm">
-								<h4>Cys-Oxidation Stochiometry</h4>
+								<h4 id="cysOxLabel">Cys-Oxidation Stochiometry</h4>
 								<button class="btn btn-outline-secondary" id = "fullOrModOnlyToggleHeatmap">Modified Positions</button>
 								<div class="my-4" id="siteHeatmap"></div>
 							</div>
 							<div class="mr-sm-auto col-lg-6  col-md-6 border-bottom">
 								<div id = "seqMapDiv" class = "ml-sm-auto col-lg-12">
-									<h4>Sequence Map
+									<h4 id="seqMapLabel">Sequence Map
 										<button class="btn btn-outline-secondary d-inline" type="button" id = "seqMapUnzoom" onclick = "featureViewer.resetZoom()">
 											<span data-feather="zoom-out"></span>
 										</button>
@@ -68,7 +68,7 @@
 								</div>
 								<div id = "siteDiv" class = "ml-sm-auto col-lg-12 border border-dark border-top border-left">
 									<div id = "siteQuant" class = "ml-sm-auto col-lg-12">
-										<h4>Site Stoichiometry
+										<h4 id="siteStoichLabel">Site Stoichiometry
 											<button class="btn btn-outline-secondary d-inline" id = "tissueOrderToggle">Order By Tissue</button>
 										</h4>
 										<div id = "siteQuantPlot"></div>
@@ -148,6 +148,7 @@
 	    <script src="js/feature-viewer.nextprot.js"></script> <!-- Contains old JQ ui, keep at top so other js overrides -->
 	    <script src="js/plotly-cartesian.min.js"></script>	    
 	    <script src="js/popper.min.js"></script>
+	    <script src="js/tippy_4-3-5.min.js"></script>
 	    <script src="js/bootstrap.bundle.min.js"></script>
 	    <script src="js/jquery-ui.min.js"></script>
 	    <script src="js/datatables.min.js"></script>
@@ -159,9 +160,20 @@
 		<script src="js/oximouse_sites.js"></script>
 		<script>
 			var siteHeatmapColors = [['0', 'white'],['0.1', 'rgb(141,141,141)'],['0.25', 'rgb(164,11,11)'],['1', 'rgb(214,0,0)']];
-			DisplayModalDiv("","#loadingModal");
-			Query("A0JNU3");
-			feather.replace();
+			(function(){
+				tippy('#cysOxLabel', {
+					  content: "Oxidation sites are colored according to their oxidation% values in each tissue. Click to plot Site Stoichiometry.",
+					});
+				tippy('#seqMapLabel', {
+					  content: "Map of cysteine oxidation sites (identified by OxiMouse) and phosphorylation sites (annotated in Uniprot).",
+					});
+				tippy('#siteStoichLabel', {
+					  content: "Site stoichiometry for an individual cysteine oxidation site.",
+					});
+				DisplayModalDiv("","#loadingModal");
+				Query("A0JNU3");
+				feather.replace();
+			})();
 		</script>
 	</body>
 </html>
