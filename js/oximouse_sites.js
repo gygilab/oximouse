@@ -32,7 +32,7 @@ function DisplayModalDiv(queryString,targetDiv = "#noProteinModal"){
  * @param sequenceOnly
  * @returns
  */
-function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additionalSiteMap = "Phospho"){
+function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additionalSiteMapName = "Phospho"){
 	SendGaEvent(accession, 'Site Query Initiated');
 	let requestUrl = "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
 	requestUrl += accession;
@@ -53,11 +53,12 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 			sequence = result[0].sequence.sequence;
 			sequenceArray = sequence.split('').map((x,index)=>x + (index + 1));
 			if(typeof(result[0].features) !== "undefined"){
-				uniprotFeatures = [...new Set(result[0].features.filter(b=>b.type == "MOD_RES" && b.description.includes(additionalSiteMap)).map(b=>+b["begin"]))];
+				uniprotFeatures = [...new Set(result[0].features.filter(b=>b.type == "MOD_RES" && b.description.includes(additionalSiteMapName)).map(b=>+b["begin"]))];
 				disulfideFeatures = [...new Set(result[0].features.filter(b=>b.type == "DISULFID").map(b=>+b["begin"]))];
 			}
 			$(targetDiv).empty();
-			NewSequenceMap(targetDiv,sequence,GenerateFeature(SitesToPositions(uniprotFeatures),additionalSiteMap));
+			let newFeaturesArray = [ GenerateFeature(SitesToPositions(uniprotFeatures),additionalSiteMapName) , GenerateFeature(SitesToPositions(disulfideFeatures),"Disulfide")]
+			NewSequenceMap(targetDiv,sequence,newFeaturesArray);
 			ConsumeSiteData("data/site_all.csv",accession);			
 		}
 		return result;
@@ -252,11 +253,13 @@ let featureViewer;
  * @param newFeature will add one feature by default
  * @returns
  */
-function NewSequenceMap(sequenceMapTarget, sequence, newFeature){
+function NewSequenceMap(sequenceMapTarget, sequence, newFeaturesArray){
 	let options = {showAxis: true, showSequence: true,brushActive: true, toolbar:true,bubbleHelp: false, zoomMax:3 };
 	featureViewer = new FeatureViewer(sequence, sequenceMapTarget,options);
-	if(typeof newFeature !== "undefined"){
-		featureViewer.addFeature(newFeature);
+	if(typeof newFeaturesArray !== "undefined"){
+		for(i = 0; i < newFeaturesArray.length; i++){
+			featureViewer.addFeature(newFeaturesArray[i]);
+		}
 	}
 }
 
