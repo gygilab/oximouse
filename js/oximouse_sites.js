@@ -13,7 +13,7 @@
  * 
  */
 
-let uniprotQuery; let uniprotFeatures;
+let uniprotQuery; let uniprotFeatures; let disulfideFeatures;
 let tissues; let sortedTissues; let Tissues;
 let sequence; let sequenceArray;
 let currentSite = 1;
@@ -52,7 +52,10 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 		if(sequenceOnly){
 			sequence = result[0].sequence.sequence;
 			sequenceArray = sequence.split('').map((x,index)=>x + (index + 1));
-			uniprotFeatures = [...new Set(result[0].features.filter(b=>b.type == "MOD_RES" && b.description.includes(additionalSiteMap)).map(b=>+b["begin"]))];
+			if(typeof(result[0].features) !== "undefined"){
+				uniprotFeatures = [...new Set(result[0].features.filter(b=>b.type == "MOD_RES" && b.description.includes(additionalSiteMap)).map(b=>+b["begin"]))];
+				disulfideFeatures = [...new Set(result[0].features.filter(b=>b.type == "DISULFID").map(b=>+b["begin"]))];
+			}
 			$(targetDiv).empty();
 			NewSequenceMap(targetDiv,sequence,GenerateFeature(SitesToPositions(uniprotFeatures),additionalSiteMap));
 			ConsumeSiteData("data/site_all.csv",accession);			
