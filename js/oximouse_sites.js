@@ -167,7 +167,10 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
     	//prep data
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
-			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal","#isoformProteinQuery");
+			tippy('#proteinInformation', {
+				  content: "<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.",
+				  showOnInit: true,
+				});
 		}
 		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
