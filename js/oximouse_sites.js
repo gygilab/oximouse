@@ -21,8 +21,8 @@ let proteinSites; let sitePositions; let siteFeatures;
 let proteinQuant; let proteinError;
 let allSiteData; let proteinList;
 
-function DisplayModalDiv(queryString,targetDiv = "#noProteinModal"){
-	$("#noProteinQuery").html(boldText(queryString));
+function DisplayModalDiv(queryString,targetDiv = "#noProteinModal", queryDisplayDiv = "#noProteinQuery"){
+	$(queryDisplayDiv).html(boldText(queryString));
 	$(targetDiv).modal('show');
 }
 
@@ -144,7 +144,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
     	//prep data
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
-			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal");
+			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal","#isoformProteinQuery");
 		}
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
@@ -167,7 +167,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
     	//prep data
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
-			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal");
+			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal","#isoformProteinQuery");
 		}
 		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
