@@ -142,7 +142,13 @@ $("#tissueOrderToggle").click(function() {
 function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "oxi_percent_"){
 	if(typeof allSiteData !== "undefined"){
     	//prep data
-    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		if(uniprotAccessionQuery.includes("-")){
+			uniprotAccessionQuery = uniprotAccessionQuery.split("-")[0];
+	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		}
+		if(proteinQuant.length == 0) {
+	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		}
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
     	proteinSites = RandomMultiDimArray(sequence.length,tissues.length,0);
@@ -161,8 +167,14 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 			minLength: 2
 		});
     	//prep data
-    	proteinQuant = value.filter(b=>b.Uniprot == uniprotAccessionQuery);
-    	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
+		if(uniprotAccessionQuery.includes("-")){
+			uniprotAccessionQuery = uniprotAccessionQuery.split("-")[0];
+	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		}
+		if(proteinQuant.length == 0) {
+	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		}
+		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
     	proteinSites = RandomMultiDimArray(sequence.length,tissues.length,0);
     	//build UI
