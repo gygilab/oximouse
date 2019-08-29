@@ -142,12 +142,9 @@ $("#tissueOrderToggle").click(function() {
 function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "oxi_percent_"){
 	if(typeof allSiteData !== "undefined"){
     	//prep data
-		if(uniprotAccessionQuery.includes("-")){
-			uniprotAccessionQuery = uniprotAccessionQuery.split("-")[0];
-	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
-		}
-		if(proteinQuant.length == 0) {
-	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
+			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal");
 		}
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
@@ -161,18 +158,16 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 	}
     return d3.csv(newDataSource, function(value) {
     	//generate protein list for searching
-    	allSiteData = value;
+    	// sort input data by Uniprot
+    	allSiteData = value.sort((a,b) => (a.Uniprot > b.Uniprot) ? 1 : ((b.Uniprot > a.Uniprot) ? -1 : 0));;
 		$( "#sitesSearchInput" ).autocomplete({
 			source: [...new Set(allSiteData.map(b=>b.Gene))],
 			minLength: 2
 		});
     	//prep data
-		if(uniprotAccessionQuery.includes("-")){
-			uniprotAccessionQuery = uniprotAccessionQuery.split("-")[0];
-	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
-		}
-		if(proteinQuant.length == 0) {
-	    	proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
+		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
+			DisplayModalDiv(uniprotAccessionQuery, "#isoformModal");
 		}
 		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
