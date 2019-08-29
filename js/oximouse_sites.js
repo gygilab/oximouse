@@ -147,6 +147,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 			tippy('#proteinInformation', {
 				  content: "<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.",
 				  showOnInit: true,
+				  placement: "top-end",
 				});
 		}
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
@@ -173,6 +174,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 			tippy('#proteinInformation', {
 				  content: "<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.",
 				  showOnInit: true,
+				  placement: "top-end",
 				});
 		}
 		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
