@@ -133,7 +133,6 @@ $("#tissueOrderToggle").click(function() {
 	ReorderBarPlotByTissue();
 });
 
-
 /**
  * Consume flat file data, featureViewer relies on d3 v3.5, use that for tsv reading
  * @param newDataSource
@@ -144,16 +143,9 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
     	//prep data
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
-			tippy('#proteinInformation', {
-				  content: "<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.",
-				  showOnInit: true,
-				  placement: "top-start",
-				});
+			isoformTippy.setContent("<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.");
 		} else {
-			tippy('#proteinInformation', {
-				  content: "<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>",
-				  placement: "top-start",
-				});
+			isoformTippy.setContent("<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>");
 		}
     	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
@@ -176,16 +168,9 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
     	//prep data
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
-			tippy('#proteinInformation', {
-				  content: "<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.",
-				  showOnInit: true,
-				  placement: "top-start",
-				});
+			isoformTippy.setContent("<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.");
 		} else {
-			tippy('#proteinInformation', {
-				  content: "<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>",
-				  placement: "top-start",
-				});
+			isoformTippy.setContent("<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>");
 		}
 		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
