@@ -154,6 +154,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
 			document.querySelector("#proteinInformation")._tippy.setContent(
 					"<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.");
+			document.querySelector("#proteinInformation")._tippy.show();
 		} else {
 			document.querySelector("#proteinInformation")._tippy.setContent(
 					 "<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>");
@@ -181,6 +182,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
 			document.querySelector("#proteinInformation")._tippy.setContent(
 					"<b><font color='red'>" + uniprotAccessionQuery + " has multiple isoforms in OxiMouse.</font></b> Search by Uniprot accession to view data for individual isoforms.");
+			document.querySelector("#proteinInformation")._tippy.show();
 		} else {
 			document.querySelector("#proteinInformation")._tippy.setContent(
 					 "<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>");
