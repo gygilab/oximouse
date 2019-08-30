@@ -133,11 +133,6 @@ $("#tissueOrderToggle").click(function() {
 	ReorderBarPlotByTissue();
 });
 
-tippy('#proteinInformation', {
-	  content: "",
-	  showOnInit: true,
-	  placement: "top-start",
-	});
 
 /**
  * Consume flat file data, featureViewer relies on d3 v3.5, use that for tsv reading
@@ -145,6 +140,14 @@ tippy('#proteinInformation', {
  * @returns
  */
 function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "oxi_percent_"){
+	if(typeof(document.querySelector("#proteinInformation")._tippy) == "undefined"){
+		tippy('#proteinInformation', {
+			  content: "",
+			  showOnInit: true,
+			  placement: "top-start",
+			});
+	}
+	
 	if(typeof allSiteData !== "undefined"){
     	//prep data
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
