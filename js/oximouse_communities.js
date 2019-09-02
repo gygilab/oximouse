@@ -28,7 +28,7 @@ function ConsumeGraphData(newDataSource){
 	    	}
 	    }
 	    //plot
-	    NewHeatmap("communityHeatmap",communityKeys,communityNumbers,communities,communitiesColors,[55,50,150,30],[0,0.1],"BioPlex 2.0 Community", "Tissue_AgeGroup", "p-value");
+	    NewHeatmap("communityHeatmap",communityKeys,communityNumbers,communities,communitiesColors,[55,50,150,30],[0,100],"BioPlex 2.0 Community", "Tissue_AgeGroup", "% of community");
 	    GraphListener('communityHeatmap','graphDescription','graphPlot');
 	    updateTissueGraphDropdown(communityKeys);
 	    cytoscape.warnings(false);

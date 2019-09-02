@@ -145,7 +145,7 @@
 		    var communitiesColors = [['0', 'blue'],['0.5', 'white'],['1', 'white']];
 			(function(){
 				tippy('#communityEnrichmentLabel', {
-					  content: "Significance of enrichment of oxidized proteins within Bioplex 2.0 interaction communities. Click to display network graph.",
+					  content: "Percentage of modified proteins in each community. Click to display network graph.",
 					});
 				tippy('#networkLabel', {
 					  content: "Graph display of selected BioPlex community. Colored by oxidation % values (red: >20%; orange: 10-20%; skyblue: <10%; gray: NQ).",
@@ -153,7 +153,7 @@
 			    DisplayModalDiv("","#waitingModal");
 			    ImportCommunityAnnotations("data/huttlin2017_communities_oxi_overlay.tsv");
 			    ImportInteractionData("data/combinedInteractionList_032019.tsv");
-				ConsumeGraphData("data/communities_tissues_oxi_pval.tsv");
+				ConsumeGraphData("data/bioplex_overlay_percent.tsv");
 			})();
 		</script>
 	</body>
