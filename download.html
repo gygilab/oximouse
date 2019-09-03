@@ -45,15 +45,15 @@
 		<div class="ml-sm-auto col-lg-10 col-md-9 col-sm-8 pt-3 px-4"  id = "dashboardBody">
 			<div id = "downloadAccordion">
 				<div class = "card">
-					<div class = "card-header bg-dark text-white" id = "downloadAllHeader">
+					<div class = "card-header bg-dark text-white" id = "downloadSiteHeader">
 						<h2>
-							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadAllCard" aria-expanded = "false" aria-controls = "downloadAllCard">
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadSiteCard" aria-expanded = "false" aria-controls = "downloadSiteCard">
 								<span data-feather="plus-circle"></span>
 								Download All Data
 							</button>
 						</h2>
 					</div>
-					<div id = "downloadAllCard" class="collapse" aria-labelledby="downloadAllHeader" data-parent="#downloadAccordion">
+					<div id = "downloadSiteCard" class="collapse" aria-labelledby="downloadSiteHeader" data-parent="#downloadAccordion">
 						<div class = "card-body">
 							<h5>Download flat files (tab-separated) containing all data displayed in the OxiMouse website.</h5>
 						</div>
@@ -62,9 +62,30 @@
 							<form id = "downloadSites" method="get">
 								<button class="btn btn-outline-secondary mb-5" id = "downloadSitesButton" type="submit"><span data-feather="download"></span>Sites</button>
 							</form>
-							<h5>Download hypergeometric test p-values for oxidation within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
+						</div>
+					</div>
+				</div>
+				<div class = "card">
+					<div class = "card-header bg-dark text-white" id = "downloadCommHeader">
+						<h2>
+							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadCommCard" aria-expanded = "false" aria-controls = "downloadCommCard">
+								<span data-feather="plus-circle"></span>
+								Download Community Data
+							</button>
+						</h2>
+					</div>
+					<div id = "downloadCommCard" class="collapse" aria-labelledby="downloadCommHeader" data-parent="#downloadAccordion">
+						<div class = "card-body">
+							<h5>Download flat files (tab-separated) containing all data displayed in the OxiMouse website.</h5>
+						</div>
+						<div class = "container-fluid">
+							<h5>Download community enrichment percentages for oxidation within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
 							<form id = "downloadCommunities" method="get">
 								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunitiesButton" type="submit"><span data-feather="download"></span>Communities</button>
+							</form>
+							<h5>Download % oxidation overlaid on community proteins within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
+							<form id = "downloadCommunityOverlay" method="get">
+								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunityOverlayButton" type="submit"><span data-feather="download"></span>Communities</button>
 							</form>
 						</div>
 					</div>

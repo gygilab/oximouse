@@ -142,7 +142,7 @@
 	    <script>
 			var cy;
 			var communities; var communityKeys; var currentCommunity = 0;
-		    var communitiesColors = [['0', 'blue'],['0.5', 'white'],['1', 'white']];
+		    var communitiesColors = [['0', 'white'],['0.5', 'grey'],['1', 'blue']];
 			(function(){
 				tippy('#communityEnrichmentLabel', {
 					  content: "Percentage of modified proteins in each community. Click to display network graph.",
@@ -151,9 +151,9 @@
 					  content: "Graph display of selected BioPlex community. Colored by oxidation % values (red: >20%; orange: 10-20%; skyblue: <10%; gray: NQ).",
 					});
 			    DisplayModalDiv("","#waitingModal");
-			    ImportCommunityAnnotations("data/huttlin2017_communities_oxi_overlay.tsv");
-			    ImportInteractionData("data/combinedInteractionList_032019.tsv");
-				ConsumeGraphData("data/bioplex_overlay_percent.tsv");
+			    ImportCommunityAnnotations("data/communities/huttlin2017_communities_oxi_overlay.tsv");
+			    ImportInteractionData("data/communities/combinedInteractionList_032019.tsv");
+				ConsumeGraphData("data/communities/huttlin2017_communities_bioplex_overlay_percent.tsv");
 			})();
 		</script>
 	</body>
