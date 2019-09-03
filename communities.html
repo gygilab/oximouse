@@ -143,10 +143,10 @@
 	    <script>
 			var cy;
 			var communities; var communityKeys; var currentCommunity = 0;
-		    var communitiesColors = [['0', 'white'],['0.5', 'grey'],['1', 'blue']];
+		    var communitiesColors = [['0', 'white'],['0.5', 'blue'],['1', 'navy']];
 			(function(){
 				tippy('#communityEnrichmentLabel', {
-					  content: "Percentage of modified proteins in each community. Click to display network graph.",
+					  content: "Percentage of highly oxidized (>20%) proteins in each community. Click to display network graph.",
 					});
 				tippy('#networkLabel', {
 					  content: "Graph display of selected BioPlex community. Colored by oxidation % values (red: >20%; orange: 10-20%; skyblue: <10%; gray: NQ).",
