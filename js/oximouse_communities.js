@@ -352,13 +352,14 @@ function AddNetworkToolTips(){
  * @returns
  */
 function makeNodeToolTip(netElem){
-	var geneID = netElem.data().gene_id.split("-")[0];
-	var geneName = (netElem.data().gene_symbol !== null) ? netElem.data().gene_symbol.split("-")[0] : geneID;
+	var geneID = netElem.data().id.split("-")[0];
+	var geneName = (netElem.data().label !== null) ? netElem.data().label.split("-")[0] : geneID;
+	var weight = netElem.data().weight;
 	return tippy( netElem.popperRef(), {
 		content: function(){
 			var div = document.createElement('div');
 			div.id = "NodeToolTip";
-			div.innerHTML = "<h4 align='left'>" + label + " was " + Math.round(weight,2) + "% oxidized.</h4>";
+			div.innerHTML = "<h4 align='left'>Maximal site oxidation for " + geneName + " (GeneID: " + geneID + ")" + " was " + Math.round(weight,2) + "% oxidized.</h4>";
 			return div;
 		},
 		delay: 100,
