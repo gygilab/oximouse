@@ -312,6 +312,63 @@ function GenerateNewGraph(graphId, textId, clusterNo, dataColumn, columnNames = 
 	var newNetworkElements = [ EdgeTableToNodes(edges,columnNames,matchingArray,weightingArray,namingArray)
 		.concat( EdgeTableToEdges(edges,columnNames,matchingArray,weightingArray) ) ];
     NewGraph(graphId, newNetworkElements[0], cystyle);
+    AddNetworkToolTips();
 }
 
 
+var temporaryToolTip;
+var temporaryToolTipNode;
+var temporaryToolTipEdge;
+
+function AddNetworkToolTips(){
+	cy.on('tap', 'node', function (evt) {
+		//console.log(evt.target.id())
+		if(temporaryToolTipNode === cy.getElementById(evt.target.id()) && temporaryToolTip !== undefined){
+			temporaryToolTip.hide()
+			temporaryToolTip = undefined;
+			return;
+		} else{
+			temporaryToolTipNode = cy.getElementById(evt.target.id());
+			if(temporaryToolTip !== undefined){
+				temporaryToolTip.hide()
+			}
+			temporaryToolTip = makeNodeToolTip(temporaryToolTipNode, evt.target.id());
+			temporaryToolTip.show();
+		}
+	});
+	
+	cy.on('tapstart', function (evt) {
+		if(temporaryToolTip !== undefined && evt.target === cy){
+			temporaryToolTip.hide()
+			temporaryToolTip = undefined;
+		}
+	});
+};
+
+/**
+ * Generate network tooltip for node
+ * @param netElem
+ * @param text
+ * @returns
+ */
+function makeNodeToolTip(netElem){
+	var geneID = netElem.data().gene_id.split("-")[0];
+	var geneName = (netElem.data().gene_symbol !== null) ? netElem.data().gene_symbol.split("-")[0] : geneID;
+	return tippy( netElem.popperRef(), {
+		content: function(){
+			var div = document.createElement('div');
+			div.id = "NodeToolTip";
+			div.innerHTML = "<h4 align='left'>" + label + " was " + Math.round(weight,2) + "% oxidized.</h4>";
+			return div;
+		},
+		delay: 100,
+		theme: 'light-border',
+		trigger: 'manual',
+		arrow: true,
+		placement: 'right',
+		hideOnClick: false,
+		multiple: false,
+		sticky: true,
+		interactive: true,
+	});
+};
