@@ -54,29 +54,26 @@
 						</h2>
 					</div>
 					<div id = "downloadSiteCard" class="collapse" aria-labelledby="downloadSiteHeader" data-parent="#downloadAccordion">
-						<div class = "card-body">
-							<h5>Download tab-separated and xlsx files containing all data displayed in the OxiMouse website.</h5>
-						</div>
 						<div class = "container-fluid">
-							<h5>Download site stochiometry information for all proteins.</h5>
+							<h5>Download site stochiometry data for all proteins.</h5>
 							<form id = "downloadSites" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadSitesButton" type="submit"><span data-feather="download"></span>Sites</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadSitesButton" type="submit"><span data-feather="download"></span>All Sites (.tsv)</button>
 							</form>
 							<h5>Download formatted site stochiometry information for OLD mouse proteins.</h5>
 							<form id = "downloadOldSites" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadOldSitesButton" type="submit"><span data-feather="download"></span>Sites</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadOldSitesButton" type="submit"><span data-feather="download"></span>Old Sites (.xlsx)</button>
 							</form>
 							<h5>Download formatted site stochiometry information for YOUNG mouse proteins.</h5>
 							<form id = "downloadYoungSites" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadYoungSitesButton" type="submit"><span data-feather="download"></span>Sites</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadYoungSitesButton" type="submit"><span data-feather="download"></span>Young Sites (.xlsx)</button>
 							</form>
 							<h5>Download community enrichment percentages for oxidation within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
 							<form id = "downloadCommunities" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunitiesButton" type="submit"><span data-feather="download"></span>Communities</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunitiesButton" type="submit"><span data-feather="download"></span>Enriched Communities (.tsv)</button>
 							</form>
 							<h5>Download % oxidation overlaid on community proteins within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
 							<form id = "downloadCommunityOverlay" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunityOverlayButton" type="submit"><span data-feather="download"></span>Communities</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunityOverlayButton" type="submit"><span data-feather="download"></span>Overlaid Communities (.tsv)</button>
 							</form>
 						</div>
 					</div>
@@ -92,21 +89,13 @@
 					</div>
 					<div id = "downloadSuppCard" class="collapse" aria-labelledby="downloadSuppHeader" data-parent="#downloadAccordion">
 						<div class = "container-fluid">
-							<h5>Download site stochiometry information for all proteins.</h5>
-							<form id = "downloadSites" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadSitesButton" type="submit"><span data-feather="download"></span>Sites</button>
-							</form>
-							<h5>Download community enrichment percentages for oxidation within <a href="http://www.nature.com/nature/journal/vaop/ncurrent/full/nature22366.html">BioPlex</a> communities (Huttlin et. al. 2017).</h5>
-							<form id = "downloadCommunities" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadCommunitiesButton" type="submit"><span data-feather="download"></span>Communities</button>
-							</form>
 							<h5>Download disease adjusted data for YOUNG mice.</h5>
 							<form id = "downloadDiseaseYoung" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadDiseaseYoungButton" type="submit"><span data-feather="download"></span>Communities</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadDiseaseYoungButton" type="submit"><span data-feather="download"></span>Disease Adjusted Young (.xlsx)</button>
 							</form>
 							<h5>Download disease adjusted data for OLD mice.</h5>
 							<form id = "downloadDiseaseOld" method="get">
-								<button class="btn btn-outline-secondary mb-5" id = "downloadDiseaseOldButton" type="submit"><span data-feather="download"></span>Communities</button>
+								<button class="btn btn-outline-secondary mb-5" id = "downloadDiseaseOldButton" type="submit"><span data-feather="download"></span>Disease Adjusted Old (.xlsx)</button>
 							</form>
 						</div>
 					</div>
@@ -116,7 +105,7 @@
 						<h2>
 							<button class = "btn collapsed" data-toggle = "collapse" data-target = "#downloadSpecificCard" aria-expanded = "false" aria-controls = "downloadSpecificCard">
 								<span data-feather="plus-circle"></span>
-								Download Protein Data
+								Download Individual Protein Data
 							</button>
 						</h2>
 					</div>
