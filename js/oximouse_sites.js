@@ -20,6 +20,7 @@ let currentSite = 1;
 let proteinSites; let sitePositions; let siteFeatures;
 let proteinQuant; let proteinError;
 let allSiteData; let proteinList;
+let orderedByTissue = false;
 
 function DisplayModalDiv(queryString,targetDiv = "#noProteinModal", queryDisplayDiv = "#noProteinQuery"){
 	$(queryDisplayDiv).html(boldText(queryString));
@@ -35,6 +36,8 @@ function DisplayModalDiv(queryString,targetDiv = "#noProteinModal", queryDisplay
 function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additionalSiteMapName = "Phospho"){
 	SendGaEvent(accession, 'Site Query Initiated');
 	let requestUrl = "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=1&accession=";
+	orderedByTissue = false;
+	$("#tissueOrderToggle").html("Order By Tissue");
 	requestUrl += accession;
 	DisplayModalDiv("","#loadingModal");
 	return $.getJSON(requestUrl).done(function(result){
@@ -106,7 +109,11 @@ $("#fullOrModOnlyToggleHeatmap").click(function() {
 	ToggleHeatmap();
 });
 
-let orderedByTissue = false;
+/**
+ * Reorder bar plot by age or tissue
+ * @param targetDiv
+ * @returns
+ */
 function ReorderBarPlotByTissue(targetDiv = 'siteQuantPlot'){
 	let tempTissues; let tissueValues;
 	let tempError = proteinError[sitePositions.sort(function(a,b){ return a - b}).indexOf(currentSite)];
