@@ -87,7 +87,7 @@ function OnlyModResHeatmap(targetDiv = 'siteHeatmap'){
 	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
 	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
 	NewHeatmap(targetDiv,tissues,sequenceArray.filter((b,i)=> sitePositions.includes(i+1)),modifiedProteinSites,siteHeatmapColors,[60,50,150,30]);
-	PlotListener(targetDiv,"siteDescriptionText", tissues, modifiedProteinSites, modifiedError,sitePositions.sort(function(a,b){ return a - b}),true);
+	PlotListener(targetDiv,"siteDescriptionText", tissues, modifiedProteinSites, modifiedError,sitePositions,true);
 	onlyModInHeatmap = true;
 }
 
@@ -116,9 +116,10 @@ function ReorderBarPlotByTissue(targetDiv = 'siteQuantPlot'){
 		orderedByTissue = false;
 		$("#tissueOrderToggle").html("Order By Tissue");
 	} else {
+		// assume proteinSites are in tissues order
 		tempTissues = tissues.map(b=>b);
-		tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[currentSite - 1][i]]).sort(function(a,b) { a[0] - b[0] }).map(b=>b[1]);
-		tempError = tempTissues.map((b,i)=> [ b, tempError[i]]).sort(function(a,b) { a[0] - b[0] }).map(b=>b[1]);
+		tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[currentSite - 1][i]]).sort().map(b=>b[1]);
+		tempError = tempTissues.map((b,i)=> [ b, tempError[i]]).sort().map(b=>b[1]);
 		tempTissues.sort();
 		orderedByTissue = true;
 		$("#tissueOrderToggle").html("Order By Age");
