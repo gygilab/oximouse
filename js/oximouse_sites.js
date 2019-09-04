@@ -87,7 +87,7 @@ function OnlyModResHeatmap(targetDiv = 'siteHeatmap'){
 	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
 	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
 	NewHeatmap(targetDiv,tissues,sequenceArray.filter((b,i)=> sitePositions.includes(i+1)),modifiedProteinSites,siteHeatmapColors,[60,50,150,30]);
-	PlotListener(targetDiv,"siteDescriptionText", tissues, modifiedProteinSites, modifiedError,sitePositions,true);
+	PlotListener(targetDiv,"siteDescriptionText", tissues, modifiedProteinSites, modifiedError,sitePositions.sort(function(a,b){ return a - b}),true);
 	onlyModInHeatmap = true;
 }
 
@@ -109,23 +109,21 @@ $("#fullOrModOnlyToggleHeatmap").click(function() {
 let orderedByTissue = false;
 function ReorderBarPlotByTissue(targetDiv = 'siteQuantPlot'){
 	let tempTissues; let tissueValues;
-	let tempError = proteinError[sitePositions.indexOf(currentSite)];
-	if(!orderedByTissue){
-		tempTissues = tissues.map(b=>b);
-		tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[currentSite - 1][i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
-		tempError = tempTissues.map((b,i)=> [ b, tempError[i]]).sort(function(a,b) { return a[0] > b[0] ? 1 : -1 }).map(b=>b[1]);
-		tempTissues.sort();
-		orderedByTissue = true;
-		$("#tissueOrderToggle").html("Order By Age");
-		
-	} else {
+	let tempError = proteinError[sitePositions.sort(function(a,b){ return a - b}).indexOf(currentSite)];
+	if(orderedByTissue){
 		tempTissues = tissues.map(b=>b);
 		tissueValues = proteinSites[currentSite - 1];
 		orderedByTissue = false;
 		$("#tissueOrderToggle").html("Order By Tissue");
+	} else {
+		tempTissues = tissues.map(b=>b);
+		tissueValues = tempTissues.map((b,i)=> [ b, proteinSites[currentSite - 1][i]]).sort(function(a,b) { a[0] - b[0] }).map(b=>b[1]);
+		tempError = tempTissues.map((b,i)=> [ b, tempError[i]]).sort(function(a,b) { a[0] - b[0] }).map(b=>b[1]);
+		tempTissues.sort();
+		orderedByTissue = true;
+		$("#tissueOrderToggle").html("Order By Age");
 	}
-	PlotlyBar('siteQuantPlot', tempTissues, tissueValues, 0,tempError);
-	//PlotlyBar(targetDiv,xvals,yvals,targetX = 0,yerror, yaxTitle = "% Occupancy")
+	PlotlyBar('siteQuantPlot', tempTissues, tissueValues, 0,tempError, onlyModInHeatmap);
 }
 
 
@@ -149,7 +147,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 	}
 	
 	if(typeof allSiteData !== "undefined"){
-    	//prep data
+		//prep data for queried protein
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
 			document.querySelector("#proteinInformation")._tippy.setContent(
@@ -159,8 +157,11 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 			document.querySelector("#proteinInformation")._tippy.setContent(
 					 "<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>");
 		}
-    	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
+		// sort sites to keep consistent barplotting
+    	sitePositions = proteinQuant.map(b=> PullSitesFromArray(b)).sort(function(a,b) { return a - b });
+    	// tissues/samples for headers
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
+    	// site quant for all residues in a protein
     	proteinSites = RandomMultiDimArray(sequence.length,tissues.length,0);
     	//build UI
     	UpdateProteinSitesFromArray(sitePositions,proteinQuant);
@@ -177,7 +178,7 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 			source: [...new Set(allSiteData.map(b=>b.Gene))],
 			minLength: 2
 		});
-    	//prep data
+    	//prep data for queried protein
 		proteinQuant = allSiteData.filter(b=>b.Uniprot == uniprotAccessionQuery);
 		if(allSiteData.filter(b=>b.Uniprot.includes(uniprotAccessionQuery + "-")).length > 0) {
 			document.querySelector("#proteinInformation")._tippy.setContent(
@@ -187,8 +188,11 @@ function ConsumeSiteData(newDataSource, uniprotAccessionQuery, tissueString = "o
 			document.querySelector("#proteinInformation")._tippy.setContent(
 					 "<b><font color='#ffc581'>" + uniprotAccessionQuery + " has a single isoform in OxiMouse.</font></b>");
 		}
-		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b));
+		// sort sites to keep consistent barplotting
+		sitePositions = proteinQuant.map(b=> PullSitesFromArray(b)).sort(function(a,b) { return a - b });
+		// tissues/samples for headers
     	tissues = Object.keys(proteinQuant[0]).filter(b=>b.includes(tissueString)).map(b=>b.replace(tissueString,"").toUpperCase());
+    	// site quant for all residues in a protein
     	proteinSites = RandomMultiDimArray(sequence.length,tissues.length,0);
     	//build UI
     	UpdateProteinSitesFromArray(sitePositions,proteinQuant);
