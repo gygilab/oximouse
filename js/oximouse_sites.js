@@ -256,10 +256,11 @@ function UpdateProteinSitesFromArray(sitesArray, quantArray, update = true, keyF
 	let quantOutput = quantArray.map(b=> Object.keys(b).filter((c,i) => c.includes(keyFinder)).map(function(d) {
 			if(isNaN(+b[d])) { return 0; } else { return +b[d]; }
 		}));
+	let pqSites = quantArray.map(s => parseInt(s.site.split("_")[s.site.split("_").length - 1]));
 	if(update){
 		proteinSites = proteinSites.map(function(b,i) {
-			if(sitePositions.includes(i + 1)) {
-				return quantOutput[sitePositions.indexOf(i+1)];
+			if(pqSites.includes(i + 1)) {
+				return quantOutput[pqSites.indexOf(i+1)];
 			} else { return b; } } );
 	} else {
 		return quantOutput;
