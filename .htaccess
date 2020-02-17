@@ -1,8 +1,0 @@
-AuthUserFile /home/dschweppe/.htpasswd
-AuthName "Internal Restrictions"
-AuthType Basic
-Require valid-user
-
-<Limit GET POST>
-Require user oxi
-</Limit>
