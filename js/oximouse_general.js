@@ -1,8 +1,8 @@
 //Oximouse js fnxns
-/// @author Devin K Schweppe
-/// All rights reserved, 2019
-/// Authors, Gygi Lab, President and Fellows of Harvard University
-///
+/**
+ * The Oximouse website is licensed under the CC BY 4.0 license: https://creativecommons.org/licenses/by/4.0/
+ * @author Devin Schweppe <devin_schweppe@hms.harvard.edu>
+ */
 
 $(function(){
 	$("#sidebarDiv").load("lib/sidebar.html");
