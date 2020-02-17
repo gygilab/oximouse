@@ -22,13 +22,20 @@ let proteinQuant; let proteinError;
 let allSiteData; let proteinList;
 let orderedByTissue = false;
 
+/**
+ * Display modal for bad query
+ * @param queryString
+ * @param targetDiv
+ * @param queryDisplayDiv
+ * @returns
+ */
 function DisplayModalDiv(queryString,targetDiv = "#noProteinModal", queryDisplayDiv = "#noProteinQuery"){
 	$(queryDisplayDiv).html(boldText(queryString));
 	$(targetDiv).modal('show');
 }
 
 /**
- * 
+ * Query a uniprot accession to generate sites data and plots
  * @param accession
  * @param sequenceOnly
  * @returns
@@ -68,6 +75,10 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 	}).fail(function() { DisplayModalDiv(accession); });
 }
 
+/**
+ * Build protien and sequence maps
+ * @returns
+ */
 function BuildMaps(){
 	HideModalDiv("#loadingModal");
 	NewHeatmap("siteHeatmap",tissues,sequenceArray,proteinSites,siteHeatmapColors,[60,50,150,30]);
@@ -86,6 +97,11 @@ function BuildMaps(){
 }
 
 let onlyModInHeatmap = false;
+/**
+ * Update sites heatmap to show only modified sites
+ * @param targetDiv
+ * @returns
+ */
 function OnlyModResHeatmap(targetDiv = 'siteHeatmap'){
 	let modifiedProteinSites = proteinSites.filter((b,i)=> b.some(c=>c !== 0));
 	let modifiedError = sitePositions.map((b,i)=> [b,i]).sort((a,b)=> a[0] - b[0]).map(b=> proteinError[b[1]]);
