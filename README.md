@@ -8,6 +8,8 @@ https://oximouse.hms.harvard.edu/help.html
 
 The Oximouse web application was developed by Devin Schweppe ([Gygi Lab](https://gygi.med.harvard.edu/), HMS) and Haopeng Xiao ([Chouchani Lab](https://chouchanilab.dana-farber.org/), DFCI/HMS).
 
+Images, data and source for the Oximouse website are licensed under the [CC BY 4.0 license](https://creativecommons.org/licenses/by/4.0/). 
+
 Please Cite: [**Xiao, et al. A Quantitative Tissue-Specific Landscape of Protein Redox Regulation during Aging, *Cell* (2020)**](https://doi.org/10.1016/j.cell.2020.02.012)
 
 ## Background
