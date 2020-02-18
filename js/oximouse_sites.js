@@ -48,11 +48,11 @@ function Query(accession,targetDiv = '#sequenceMap',sequenceOnly = true, additio
 	requestUrl += accession;
 	DisplayModalDiv("","#loadingModal");
 	return $.getJSON(requestUrl).done(function(result){
-		let geneName = result[0].gene[0].name.value;
-		let accessionNumber = uniprotQuery = result[0].accession;
-		let proteinName = result[0].protein.recommendedName.fullName.value;
+		let geneName = (typeof(result[0].gene[0].name) == "undefined") ? accession : result[0].gene[0].name.value;
+		let accessionNumber = uniprotQuery = (typeof(result[0].accession) == "undefined") ? accession : result[0].accession;
+		let proteinName = (typeof(result[0].protein.recommendedName.fullName) == "undefined") ? geneName : result[0].protein.recommendedName.fullName.value;
 		let commentFunction;
-		if(result[0].comments.filter(b=>b.type == "FUNCTION").length == 0){
+		if(typeof(result[0].comments) == "undefined" || result[0].comments.filter(b=>b.type == "FUNCTION").length == 0){
 			commentFunction = "No known function found in Uniprot";
 		} else {
 			commentFunction = result[0].comments.filter(b=>b.type == "FUNCTION")[0].text[0].value;
