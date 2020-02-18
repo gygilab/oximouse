@@ -261,9 +261,11 @@ function SearchSites(query, focus = true){
 
 /**
  * Pull quantitation from the protein quant array based on specific columns
- * @param keyFinder
+ * @param sitesArray
  * @param quantArray
- * @param delim
+ * @param update update the proteinSites data
+ * @param keyFinder regex in column header to match for these data
+ * @param addNewFeatures
  * @returns
  */
 function UpdateProteinSitesFromArray(sitesArray, quantArray, update = true, keyFinder = "oxi_percent_", addNewFeatures = true){
@@ -273,13 +275,17 @@ function UpdateProteinSitesFromArray(sitesArray, quantArray, update = true, keyF
 			if(isNaN(+b[d])) { return 0; } else { return +b[d]; }
 		}));
 	let pqSites = quantArray.map(s => parseInt(s.site.split("_")[s.site.split("_").length - 1]));
+
 	if(update){
 		proteinSites = proteinSites.map(function(b,i) {
 			if(pqSites.includes(i + 1)) {
 				return quantOutput[pqSites.indexOf(i+1)];
 			} else { return b; } } );
 	} else {
-		return quantOutput;
+		return proteinSites.map(function(b,i) {
+			if(pqSites.includes(i + 1)) {
+				return quantOutput[pqSites.indexOf(i+1)];
+			} } ).filter(el=> typeof(el) !== "undefined");
 	}
 
 	if(update && addNewFeatures && typeof featureViewer !== "undefined" && typeof siteFeatures == "undefined"){
